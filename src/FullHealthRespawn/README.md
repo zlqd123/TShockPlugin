@@ -1,6 +1,6 @@
 # FullHealthRespawn 复活满血
 
-- 作者: MiMo
+- 作者: 不是现在
 - 出处: TShock插件库
 - 玩家复活或进服时自动恢复满血
 
@@ -18,16 +18,10 @@
 
 ## 更新日志
 
-### v1.2.0
-- 使用 ConcurrentQueue 替代 Task.Delay，在 GameUpdate 中处理恢复
-- 添加 manifest.json 文件
-
-### v1.1.0
-- 等待时间改为0.5秒
-- 简化代码，移除不必要的功能
-
 ### v1.0.0
 - 添加插件
+- 复活或进服时自动恢复到玩家当前最大生命值
+- 使用 ConcurrentQueue 队列，在 GameUpdate 中处理恢复
 
 ## 致谢
 
