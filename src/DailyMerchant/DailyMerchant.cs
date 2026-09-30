@@ -22,6 +22,12 @@ namespace DM;
 /// 黄昏离场、月食/入侵暂停、天黑后原版自动请他离开，这些本来就有，插件不重复实现。
 /// 无配置文件，行为固定为"每天 100% 到访"。
 /// </summary>
+/// <summary>
+/// 判定用字符串一律走 GetString。
+/// 注意：插值字符串转成 FormattableString 时，编译器保留的是组合格式串本身
+/// （`$"已过上午4:30 + {0} 分钟"` 的 Format 仍是 `已过上午4:30 + {0} 分钟`，Args=[值]），
+/// 查表用的 key 因此始终带 `{0}` 占位符，与 i18n/template.pot 里的 msgid 一致。
+/// </summary>
 [ApiVersion(2, 1)]
 public class DailyMerchantPlugin : TerrariaPlugin
 {
@@ -38,8 +44,15 @@ public class DailyMerchantPlugin : TerrariaPlugin
     /// <summary>到访窗口：上午 4:30 起 450 分钟 = 中午 12 点，与原版一致。</summary>
     private const int ArrivalWindowMinutes = 450;
 
+    /// <summary>
+    /// 自动判定间隔（毫秒）。用真实时间而不是"每 N 帧"：
+    /// GameUpdate 是每个 Main.Update 触发一次，60 FPS 下每秒 60 次，
+    /// 按 20 帧算会变成每秒 3 次。
+    /// </summary>
+    private const long ScanIntervalMs = 1000;
+
     private Command? _command;
-    private int _scanCountdown;
+    private long _lastScanAt;
     private bool _worldReady;
     private bool _arrivedThisDay;
     private bool _wasDayTime = true;
@@ -103,9 +116,9 @@ public class DailyMerchantPlugin : TerrariaPlugin
             _wasDayTime = Main.dayTime;
         }
 
-        if (--_scanCountdown > 0)
+        if (Environment.TickCount64 - _lastScanAt < ScanIntervalMs)
             return;
-        _scanCountdown = 20;   // 20 刻 = 1 秒
+        _lastScanAt = Environment.TickCount64;
 
         RunScan();
     }
@@ -324,6 +337,10 @@ public class DailyMerchantPlugin : TerrariaPlugin
             return GetString($"已过上午4:30 + {0} 分钟", ArrivalWindowMinutes);
         if (Main.eclipse)
             return GetString("月食天不生成旅商");
+        // 原版 SpawnTravelNPC 的第三个门槛，诊断必须跟它一致，
+        // 否则入侵期间会误报"条件已满足"，而随后的原版调用其实会拒绝生成。
+        if (Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
+            return GetString("入侵进行中（原版此时不生成旅商）");
 
         int town = CountTownNpcs();
         if (town < 2)
@@ -404,7 +421,7 @@ public class DailyMerchantPlugin : TerrariaPlugin
 
             case "check" or "tick" or "检查" or "判定":
                 // 空服时世界不推进、自动判定不会触发，这里手动跑一次（也是自动化测试的入口）。
-                _scanCountdown = 20;
+                _lastScanAt = Environment.TickCount64;
                 RunScan();
                 player.SendInfoMessage($"§e[旅商] §7{GetString("已手动判定一次：")}§f{BlockReason(InWindow())}§7");
                 break;
