@@ -1,208 +1,204 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DailyMerchant\n"
-"POT-Creation-Date: 2026-09-30 09:00:00+0000\n"
-"PO-Revision-Date: 2026-09-30 09:00:00+0000\n"
+"POT-Creation-Date: 2026-10-01 09:26:06+0800\n"
+"PO-Revision-Date: 2026-10-01 09:26:07+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: GetText.NET Extractor\n"
-#: ../../DailyMerchant.cs:37
-msgid "让旅商每天到访：原版流动旅商每天只有约 22% 机会出现，这里改成每天必到，生成与播报仍走原版。"
-msgstr ""
 
-#: ../../DailyMerchant.cs:232
-msgid "原版已放行"
-msgstr ""
-
-#: ../../DailyMerchant.cs:240
-msgid "原版拒绝：月食天不生成旅商"
-msgstr ""
-
-#: ../../DailyMerchant.cs:243
-msgid "原版拒绝：夜晚不生成旅商"
-msgstr ""
-
-#: ../../DailyMerchant.cs:246
-msgid "原版拒绝：入侵进行中"
-msgstr ""
-
-#: ../../DailyMerchant.cs:252
-#, csharp-format
-msgid "原版拒绝：场上已有旅商（槽位 {0}，生命 {1}）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:275
-msgid "原版拒绝：既没有已入住的城镇 NPC，也没有可搬入的空房"
-msgstr ""
-
-#: ../../DailyMerchant.cs:276
-msgid "原版拒绝：TownManager 找不到可用的落脚点"
-msgstr ""
-
-#: ../../DailyMerchant.cs:288
-#, csharp-format
-msgid "原版已通过全部条件（有 {0} 位已入住 NPC）但仍没生成：活跃 NPC {1}/{2}"
-msgstr ""
-
-#: ../../DailyMerchant.cs:323
-msgid "旅商当前不在场"
-msgstr ""
-
-#: ../../DailyMerchant.cs:333
-msgid "现在是夜晚（原版入夜后不再来）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:335
-msgid "日晷 / Moondial 生效中（原版此时不掷骰）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:337
-#, csharp-format
-msgid "已过上午4:30 + {0} 分钟"
-msgstr ""
-
-#: ../../DailyMerchant.cs:339
-msgid "月食天不生成旅商"
-msgstr ""
-
-#: ../../DailyMerchant.cs:343
-msgid "入侵进行中（原版此时不生成旅商）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:347
-#, csharp-format
-msgid "城镇里只有 {0} 位 NPC，原版要求至少 2 位"
-msgstr ""
-
-#: ../../DailyMerchant.cs:351
-#, csharp-format
-msgid "城镇里有 {0} 位 NPC，但都没住进房子，原版没有落脚点（静默等待中）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:353
-msgid "条件已满足，正在按原版生成"
-msgstr ""
-
-#: ../../DailyMerchant.cs:363
-msgid "让旅商每天到访（/merchant summon|despawn|check|status）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:392
-msgid "场上已经有旅商了。"
-msgstr ""
-
-#: ../../DailyMerchant.cs:396
-msgid "已召唤，旅商现在在城镇里。"
-msgstr ""
-
-#: ../../DailyMerchant.cs:401
-msgid "召唤失败："
-msgstr ""
-
-#: ../../DailyMerchant.cs:409
-msgid "场上本来就没有旅商。"
-msgstr ""
-
-#: ../../DailyMerchant.cs:415
-msgid "已请旅商离场。"
-msgstr ""
-
-#: ../../DailyMerchant.cs:426
-msgid "已手动判定一次："
-msgstr ""
-
-#: ../../DailyMerchant.cs:437
-msgid "指令用法："
-msgstr ""
-
-#: ../../DailyMerchant.cs:438
-msgid "立刻召唤旅商（/merchant 召唤）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:439
-msgid "请旅商离场（/merchant 离开）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:440
-msgid "手动跑一次到访判定（/merchant 检查）"
-msgstr ""
-
-#: ../../DailyMerchant.cs:441
+#: ../../DailyMerchant.cs:451
 msgid "查看到访状态与城镇条件（/merchant 状态）"
 msgstr ""
 
-#: ../../DailyMerchant.cs:450
-msgid "启用中"
+#: ../../DailyMerchant.cs:419
+msgid "场上本来就没有旅商。"
 msgstr ""
 
-#: ../../DailyMerchant.cs:451
-msgid "旅商 NPC ID ="
-msgstr ""
-
-#: ../../DailyMerchant.cs:452
-msgid "每天到访"
-msgstr ""
-
-#: ../../DailyMerchant.cs:452
-msgid "原版 22.12%"
-msgstr ""
-
-#: ../../DailyMerchant.cs:453
-msgid "窗口"
-msgstr ""
-
-#: ../../DailyMerchant.cs:453
-msgid "上午4:30 起"
-msgstr ""
-
-#: ../../DailyMerchant.cs:453
-msgid "分钟"
-msgstr ""
-
-#: ../../DailyMerchant.cs:454
-msgid "当前："
-msgstr ""
-
-#: ../../DailyMerchant.cs:455
+#: ../../DailyMerchant.cs:465
 msgid "场上旅商"
 msgstr ""
 
-#: ../../DailyMerchant.cs:455
-msgid "位"
+#: ../../DailyMerchant.cs:402
+msgid "场上已经有旅商了。"
 msgstr ""
 
-#: ../../DailyMerchant.cs:455
-msgid "位置"
-msgstr ""
-
-#: ../../DailyMerchant.cs:456
+#: ../../DailyMerchant.cs:466
 msgid "城镇："
 msgstr ""
 
-#: ../../DailyMerchant.cs:456
-msgid "位 NPC（已入住"
+#: ../../DailyMerchant.cs:354
+msgid "城镇里有 {0} 位 NPC，但都没住进房子，原版没有落脚点（静默等待中）"
 msgstr ""
 
-#: ../../DailyMerchant.cs:457
-msgid "待搬入空房"
+#: ../../DailyMerchant.cs:350
+msgid "城镇里只有 {0} 位 NPC，原版要求至少 2 位"
 msgstr ""
 
-#: ../../DailyMerchant.cs:457
-msgid "判定已跑"
+#: ../../DailyMerchant.cs:463
+msgid "窗口"
 msgstr ""
 
-#: ../../DailyMerchant.cs:458
+#: ../../DailyMerchant.cs:468
 msgid "次（每秒 1 次自动，空服不跑）"
 msgstr ""
 
-#: ../../DailyMerchant.cs:459
+#: ../../DailyMerchant.cs:467
+msgid "待搬入空房"
+msgstr ""
+
+#: ../../DailyMerchant.cs:464
+msgid "当前："
+msgstr ""
+
+#: ../../DailyMerchant.cs:463
+msgid "分钟"
+msgstr ""
+
+#: ../../DailyMerchant.cs:448
+msgid "立刻召唤旅商（/merchant 召唤）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:461
+msgid "旅商 NPC ID ="
+msgstr ""
+
+#: ../../DailyMerchant.cs:326
+msgid "旅商当前不在场"
+msgstr ""
+
+#: ../../DailyMerchant.cs:462
+msgid "每天到访"
+msgstr ""
+
+#: ../../DailyMerchant.cs:469
 msgid "判定："
 msgstr ""
 
+#: ../../DailyMerchant.cs:467
+msgid "判定已跑"
+msgstr ""
+
 #: ../../DailyMerchant.cs:460
+msgid "启用中"
+msgstr ""
+
+#: ../../DailyMerchant.cs:449
+msgid "请旅商离场（/merchant 离开）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:40
+msgid "让旅商每天到访：原版流动旅商每天只有约 22% 机会出现，这里改成每天必到，生成与播报仍走原版。"
+msgstr ""
+
+#: ../../DailyMerchant.cs:373
+msgid "让旅商每天到访（/merchant summon|despawn|check|status）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:338
+msgid "日晷 / Moondial 生效中（原版此时不掷骰）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:346
+msgid "入侵进行中（原版此时不生成旅商）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:463
+msgid "上午4:30 起"
+msgstr ""
+
+#: ../../DailyMerchant.cs:450
+msgid "手动跑一次到访判定（/merchant 检查）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:356
+msgid "条件已满足，正在按原版生成"
+msgstr ""
+
+#: ../../DailyMerchant.cs:465
+msgid "位"
+msgstr ""
+
+#: ../../DailyMerchant.cs:466
+msgid "位 NPC（已入住"
+msgstr ""
+
+#: ../../DailyMerchant.cs:465
+msgid "位置"
+msgstr ""
+
+#: ../../DailyMerchant.cs:336
+msgid "现在是夜晚（原版入夜后不再来）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:340
+msgid "已过上午4:30 + {0} 分钟"
+msgstr ""
+
+#: ../../DailyMerchant.cs:425
+msgid "已请旅商离场。"
+msgstr ""
+
+#: ../../DailyMerchant.cs:436
+msgid "已手动判定一次："
+msgstr ""
+
+#: ../../DailyMerchant.cs:406
+msgid "已召唤，旅商现在在城镇里。"
+msgstr ""
+
+#: ../../DailyMerchant.cs:462
+msgid "原版 22.12%"
+msgstr ""
+
+#: ../../DailyMerchant.cs:255
+msgid "原版拒绝：场上已有旅商（槽位 {0}，生命 {1}）"
+msgstr ""
+
+#: ../../DailyMerchant.cs:278
+msgid "原版拒绝：既没有已入住的城镇 NPC，也没有可搬入的空房"
+msgstr ""
+
+#: ../../DailyMerchant.cs:249
+msgid "原版拒绝：入侵进行中"
+msgstr ""
+
+#: ../../DailyMerchant.cs:246
+msgid "原版拒绝：夜晚不生成旅商"
+msgstr ""
+
+#: ../../DailyMerchant.cs:243
+msgid "原版拒绝：月食天不生成旅商"
+msgstr ""
+
+#: ../../DailyMerchant.cs:279
+msgid "原版拒绝：TownManager 找不到可用的落脚点"
+msgstr ""
+
+#: ../../DailyMerchant.cs:470
 msgid "原版生成："
+msgstr ""
+
+#: ../../DailyMerchant.cs:235
+msgid "原版已放行"
+msgstr ""
+
+#: ../../DailyMerchant.cs:291
+msgid "原版已通过全部条件（有 {0} 位已入住 NPC）但仍没生成：活跃 NPC {1}/{2}"
+msgstr ""
+
+#: ../../DailyMerchant.cs:342
+msgid "月食天不生成旅商"
+msgstr ""
+
+#: ../../DailyMerchant.cs:411
+msgid "召唤失败："
+msgstr ""
+
+#: ../../DailyMerchant.cs:447
+msgid "指令用法："
 msgstr ""
 

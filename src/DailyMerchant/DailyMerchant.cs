@@ -24,9 +24,12 @@ namespace DM;
 /// </summary>
 /// <summary>
 /// 判定用字符串一律走 GetString。
-/// 注意：插值字符串转成 FormattableString 时，编译器保留的是组合格式串本身
-/// （`$"已过上午4:30 + {0} 分钟"` 的 Format 仍是 `已过上午4:30 + {0} 分钟`，Args=[值]），
-/// 查表用的 key 因此始终带 `{0}` 占位符，与 i18n/template.pot 里的 msgid 一致。
+/// 带占位符的文案统一用 GetString("…{0}…") + Format(...) 自己填值：
+/// GetText.NET 8 的 FormattableStringAdapter 会先把插值算好再查表，
+/// 所以 GetString($"…{0}…", args) 里的 {0} 会被当成"没有这个实参"填成 0，
+/// 而 GetString($"…{expr}…") 查表用的 key 是渲染后的文本、译文永远命中不了。
+/// GetString("…{0}…") 查表用的 key 就是带占位符的模板，与 i18n/template.pot 里的 msgid 一致，
+/// 译文里保留同样的 {0} 即可。
 /// </summary>
 [ApiVersion(2, 1)]
 public class DailyMerchantPlugin : TerrariaPlugin
@@ -249,7 +252,7 @@ public class DailyMerchantPlugin : TerrariaPlugin
         {
             NPC? npc = Main.npc[i];
             if (npc != null && npc.active && npc.type == NPCID.TravellingMerchant)
-                return GetString($"原版拒绝：场上已有旅商（槽位 {0}，生命 {1}）", i, npc.life);
+                return Format(GetString("原版拒绝：场上已有旅商（槽位 {0}，生命 {1}）"), i, npc.life);
         }
 
         int homes = 0;
@@ -285,7 +288,7 @@ public class DailyMerchantPlugin : TerrariaPlugin
                 active++;
         }
 
-        return GetString($"原版已通过全部条件（有 {0} 位已入住 NPC）但仍没生成：活跃 NPC {1}/{2}", homes, active, Main.maxNPCs);
+        return Format(GetString("原版已通过全部条件（有 {0} 位已入住 NPC）但仍没生成：活跃 NPC {1}/{2}"), homes, active, Main.maxNPCs);
     }
 
     /// <summary>最近一次原版生成的结果说明，status 里会显示。</summary>
@@ -334,7 +337,7 @@ public class DailyMerchantPlugin : TerrariaPlugin
         if (Main.IsFastForwardingTime())
             return GetString("日晷 / Moondial 生效中（原版此时不掷骰）");
         if (!inWindow)
-            return GetString($"已过上午4:30 + {0} 分钟", ArrivalWindowMinutes);
+            return Format(GetString("已过上午4:30 + {0} 分钟"), ArrivalWindowMinutes);
         if (Main.eclipse)
             return GetString("月食天不生成旅商");
         // 原版 SpawnTravelNPC 的第三个门槛，诊断必须跟它一致，
@@ -344,14 +347,21 @@ public class DailyMerchantPlugin : TerrariaPlugin
 
         int town = CountTownNpcs();
         if (town < 2)
-            return GetString($"城镇里只有 {0} 位 NPC，原版要求至少 2 位", town);
+            return Format(GetString("城镇里只有 {0} 位 NPC，原版要求至少 2 位"), town);
 
         Town(out _, out int housed, out int withRoom);
         if (housed == 0 && withRoom == 0)
-            return GetString($"城镇里有 {0} 位 NPC，但都没住进房子，原版没有落脚点（静默等待中）", town);
+            return Format(GetString("城镇里有 {0} 位 NPC，但都没住进房子，原版没有落脚点（静默等待中）"), town);
 
         return GetString("条件已满足，正在按原版生成");
     }
+
+    /// <summary>
+    /// 带占位符的文案统一这样拼：先取译文（没有译文时返回原文模板），再自己填值。
+    /// 不能写成 GetString($"…{0}…", args)，理由见类注释。
+    /// </summary>
+    private static string Format(string template, params object?[] args)
+        => string.Format(template, args);
 
     // ------------------------------------------------------------------ 命令
 
