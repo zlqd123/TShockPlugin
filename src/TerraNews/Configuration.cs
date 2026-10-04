@@ -48,23 +48,17 @@ public class TerraNewsConfig
     [JsonProperty("StormType")]
     public string StormType { get; set; } = "auto";
 
-    // 货架每行放几个图标；0 = 不换行。
-    [JsonProperty("MerchantItemsPerLine")]
-    public int MerchantItemsPerLine { get; set; } = 5;
-
     // 每秒输出一行触发器正在观察的状态。
     [JsonProperty("Diagnostics")]
     public bool Diagnostics { get; set; }
 
-    // 每日看板，刻意做得很短，因为 {icon} 的悬停提示已经包含了其余信息。
-    // 占位符：{icon} {angler} {id} {moon} {moon_bonus} {time}
-    // 含 {icon} 的行必须用「一个颜色标签包住整行」的写法，否则图标会变成一串字符。
+    // 每日看板，一行。占位符：{icon} {angler} {id} {moon} {sale} {merchant} {time}
+    // {merchant} 整段自带「旅商：」前缀并排在最末，货架为空时整段消失，不留悬空分号。
+    // 含 [i:物品ID] 的行必须用「一个颜色标签包住整行」的写法，否则图标会变成一串字符。
     [JsonProperty("DailyLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> DailyLines { get; set; } = new()
     {
-        "[c/4FC3F7:========== 泰拉新闻 · 今日渔夫任务 ==========]",
-        "[c/FFD966:任务鱼 {icon}]",
-        "[c/FFFFFF:今日月相 {moon}]"
+        "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}；{merchant}]"
     };
 
     // 早期开发版那套七行看板，只为让老配置能被认出来并换成新默认而保留。
@@ -80,31 +74,38 @@ public class TerraNewsConfig
         "[c/888888:（游戏时间 {time}）输入 /terranews 可随时重新查看今日任务]"
     };
 
-    // 沙尘暴。只在风暴出现的那一刻播一次，不跟进强度。
-    // 占位符：{storm} {remaining} {time} {moon}。
+    // 沙尘暴与暴风雪。原版只有一个 Sandstorm 事件，雪与沙按地形区分，
+    // 所以这里拆成两套模板，播报时才说对名字。这两种天气不改变任何货架，所以不带货物。
     [JsonProperty("SandstormLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> SandstormLines { get; set; } = new()
     {
-        "[c/E0A458:========== 泰拉新闻 · 天气预警 ==========]",
-        "[c/FFD966:{storm}已登陆]"
+        "[c/E0A458:特别报道：沙尘暴]"
     };
 
-    // 暴风雪。占位符与沙尘暴相同；原版只有一个 Sandstorm 事件，雪与沙按地形区分，
-    // 所以这里也拆成两套模板，播报时才说对名字。
     [JsonProperty("BlizzardLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> BlizzardLines { get; set; } = new()
     {
-        "[c/E0A458:========== 泰拉新闻 · 天气预警 ==========]",
-        "[c/FFD966:{storm}已登陆]"
+        "[c/E0A458:特别报道：暴风雪]"
     };
 
-    // 旅商到访。占位符：{items} {count} {time} {moon}。
-    [JsonProperty("MerchantLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-    public List<string> MerchantLines { get; set; } = new()
+    // 大风天。占位符：{items} {count} {time} {moon}。
+    [JsonProperty("WindyLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    public List<string> WindyLines { get; set; } = new()
     {
-        "[c/4FC3F7:========== 泰拉新闻 · 旅商到访 ==========]",
-        "[c/FFD966:今日货架（悬停查看详情）]",
-        "[c/FFFFFF:{items}]"
+        "[c/9AD4C8:特别报道：大风特卖，{items}]"
+    };
+
+    // 日食与血月。两者都带货架，用同一个 {items} 占位符。
+    [JsonProperty("EclipseLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    public List<string> EclipseLines { get; set; } = new()
+    {
+        "[c/B39DDB:特别报道：日食特卖，{items}]"
+    };
+
+    [JsonProperty("BloodMoonLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    public List<string> BloodMoonLines { get; set; } = new()
+    {
+        "[c/8B0000:特别报道：血月特卖，{items}]"
     };
 
     public void Sanitize()
@@ -113,18 +114,21 @@ public class TerraNewsConfig
         BroadcastMinute = Math.Clamp(BroadcastMinute, 0, 59);
         TriggerWindowSeconds = Math.Clamp(TriggerWindowSeconds, 1, 120);
         StartupDelaySeconds = Math.Clamp(StartupDelaySeconds, 0, 60);
-        MerchantItemsPerLine = Math.Clamp(MerchantItemsPerLine, 0, 12);
 
         Features ??= new FeatureSwitches();
 
         if (DailyLines is null || DailyLines.Count == 0)
-            DailyLines = new List<string> { "[c/FFD966:任务鱼 {icon}]" };
+            DailyLines = new List<string> { "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}；{merchant}]" };
         if (SandstormLines is null || SandstormLines.Count == 0)
-            SandstormLines = new List<string> { "[c/FFD966:{storm}已登陆]" };
+            SandstormLines = new List<string> { "[c/E0A458:特别报道：沙尘暴]" };
         if (BlizzardLines is null || BlizzardLines.Count == 0)
-            BlizzardLines = new List<string>(SandstormLines);
-        if (MerchantLines is null || MerchantLines.Count == 0)
-            MerchantLines = new List<string> { "[c/4FC3F7:旅商到访] [c/FFFFFF:{items}]" };
+            BlizzardLines = new List<string> { "[c/E0A458:特别报道：暴风雪]" };
+        if (WindyLines is null || WindyLines.Count == 0)
+            WindyLines = new List<string> { "[c/9AD4C8:特别报道：大风特卖，{items}]" };
+        if (EclipseLines is null || EclipseLines.Count == 0)
+            EclipseLines = new List<string> { "[c/B39DDB:特别报道：日食特卖，{items}]" };
+        if (BloodMoonLines is null || BloodMoonLines.Count == 0)
+            BloodMoonLines = new List<string> { "[c/8B0000:特别报道：血月特卖，{items}]" };
     }
 
     // error 是"配置读不出来"，warn 是"读出来了但没能写回去"。两者分开报，
