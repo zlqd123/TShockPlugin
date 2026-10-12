@@ -41,6 +41,7 @@
   <Project Path="src/ConsoleSql/ConsoleSql.csproj" />
   <Project Path="src/ConvertWorld/ConvertWorld.csproj" />
   <Project Path="src/CriticalHit/CriticalHit.csproj" />
+  <Project Path="src/DailyMerchant/DailyMerchant.csproj" />
   <Project Path="src/DamageRuleLoot/DamageRuleLoot.csproj" />
   <Project Path="src/DamageStatistic/DamageStatistic.csproj" />
   <Project Path="src/DataSync/DataSync.csproj" />
@@ -68,6 +69,7 @@
   <Project Path="src/EndureBoost/EndureBoost.csproj" />
   <Project Path="src/EssentialsPlus/EssentialsPlus.csproj" />
   <Project Path="src/Ezperm/Ezperm.csproj" />
+  <Project Path="src/FullHealthRespawn/FullHealthRespawn.csproj" />
   <Project Path="src/GenerateMap/GenerateMap.csproj" />
   <Project Path="src/GhostView/GhostView.csproj" />
   <Project Path="src/GolfRewards/GolfRewards.csproj" />
@@ -134,6 +136,7 @@
   <Project Path="src/SourceGen/SourceGen.csproj" />
   <Project Path="src/SpawnInfra/SpawnInfra.csproj" />
   <Project Path="src/SpclPerm/SpclPerm.csproj" />
+  <Project Path="src/Starfall/Starfall.csproj" />
   <Project Path="src/StatusTextManager/StatusTextManager.csproj" />
   <Project Path="src/Submodules/TrProtocol/src/TrProtocol.SerializerGenerator/TrProtocol.SerializerGenerator.csproj" />
   <Project Path="src/Submodules/TrProtocol/src/TrProtocol/TrProtocol.csproj" />
@@ -141,6 +144,7 @@
   <Project Path="src/SurvivalCrisis/SurvivalCrisis.csproj" />
   <Project Path="src/SwitchCommands/SwitchCommands.csproj" />
   <Project Path="src/TeleportRequest/TeleportRequest.csproj" />
+  <Project Path="src/TerraNews/TerraNews.csproj" />
   <Project Path="src/TimeRate/TimeRate.csproj" />
   <Project Path="src/TimerKeeper/TimerKeeper.csproj" />
   <Project Path="src/TownNPCHomes/TownNPCHomes.csproj" />

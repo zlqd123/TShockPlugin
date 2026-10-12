@@ -1,0 +1,11 @@
+{
+  "README.en-US": {
+    "Description": "The Travelling Merchant and the Skeleton Merchant both show up every day, each with its own switch"
+  },
+  "README.es-ES": {
+    "Description": "El mercader viajero y el mercader esqueleto aparecen todos los días, cada uno con su propio interruptor"
+  },
+  "README": {
+    "Description": "旅商与骷髅商人每天到访，各自可单独开关"
+  }
+}
