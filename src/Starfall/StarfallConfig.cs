@@ -32,9 +32,9 @@ namespace Starfall
         [JsonProperty("落星频率倍率")]
         public double StarMultiplier = 2.0;
 
-        /// <summary>白天是否也允许落星。</summary>
+        /// <summary>白天是否也允许落星（原版仅夜晚掉落，默认关闭以遵循原版）。</summary>
         [JsonProperty("白天可落星")]
-        public bool AllowDaytimeStars = true;
+        public bool AllowDaytimeStars = false;
 
         /// <summary>白天频率相对夜晚的倍率（默认 0.1，即白天的 1/10）。</summary>
         [JsonProperty("白天频率倍率")]
@@ -75,13 +75,21 @@ namespace Starfall
         [JsonProperty("沙尘暴倍率")]
         public double SandstormMultiplier = 2.0;
 
-        /// <summary>钱币雨掉落数量倍率（钱币雨的“预算”总量）。</summary>
-        [JsonProperty("钱币雨倍率")]
-        public double CoinRainMultiplier = 2.0;
+        /// <summary>钱币雨出现概率倍率（每场雨开始时，钱币雨跟随发生的概率；原版约 1/25，受幸运影响）。</summary>
+        [JsonProperty("钱币雨概率倍率")]
+        public double CoinRainChanceMultiplier = 2.0;
 
-        /// <summary>陨石雨数量倍率（一场陨石雨的流星总数）。</summary>
-        [JsonProperty("陨石雨倍率")]
-        public double MeteorShowerMultiplier = 2.0;
+        /// <summary>钱币雨产出倍率（一场钱币雨的总落币“预算”）。</summary>
+        [JsonProperty("钱币雨产出倍率")]
+        public double CoinRainYieldMultiplier = 2.0;
+
+        /// <summary>陨石雨出现概率倍率（原版每晚约 1/50 尝试坠星、失败再 1/3 转陨石雨 ≈ 1/150；需已击败克脑/世界吞噬者）。</summary>
+        [JsonProperty("陨石雨概率倍率")]
+        public double MeteorShowerChanceMultiplier = 2.0;
+
+        /// <summary>陨石雨产出倍率（一场陨石雨的流星总数）。</summary>
+        [JsonProperty("陨石雨产出倍率")]
+        public double MeteorShowerYieldMultiplier = 2.0;
 
         /// <summary>把明显越界的值收敛到合理范围，避免手改配置把服务器搞崩。</summary>
         public void Normalize()
@@ -91,8 +99,10 @@ namespace Starfall
             RainMultiplier = Clamp01(RainMultiplier, 1000.0);
             WindMultiplier = Clamp01(WindMultiplier, 100.0);
             SandstormMultiplier = Clamp01(SandstormMultiplier, 1000.0);
-            CoinRainMultiplier = Clamp01(CoinRainMultiplier, 1000.0);
-            MeteorShowerMultiplier = Clamp01(MeteorShowerMultiplier, 1000.0);
+            CoinRainChanceMultiplier = Clamp01(CoinRainChanceMultiplier, 1000.0);
+            CoinRainYieldMultiplier = Clamp01(CoinRainYieldMultiplier, 1000.0);
+            MeteorShowerChanceMultiplier = Clamp01(MeteorShowerChanceMultiplier, 1000.0);
+            MeteorShowerYieldMultiplier = Clamp01(MeteorShowerYieldMultiplier, 1000.0);
 
             if (Damage < 0) Damage = 0;
             if (Drops == null) Drops = new List<DropEntry>();

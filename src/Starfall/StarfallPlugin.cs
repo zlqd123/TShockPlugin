@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
+using Terraria.Localization;
 using TerrariaApi.Server;
 using TShockAPI;
 
@@ -26,7 +28,7 @@ namespace Starfall
         public override string Name => "Starfall";
         public override string Author => "Starfall (TShock port of Fargo's Fallen Stars)";
         public override string Description => GetString("服务端控制坠落之星生成速率、掉落与天气事件倍率。");
-        public override Version Version => new Version(2, 0, 0, 0);
+        public override Version Version => new Version(2, 0, 2, 0);
 
         internal static StarfallConfig Config;
 
@@ -58,6 +60,8 @@ namespace Starfall
         private float _lastWindTarget = float.NaN;
         private double _lastCoinRain;
         private int _lastMeteorCount;
+        private bool _lastRaining;
+        private bool _lastDayTime;
 
         public StarfallPlugin(Main game) : base(game)
         {
@@ -97,6 +101,9 @@ namespace Starfall
                 _lastWindTarget = float.NaN;
                 _lastCoinRain = 0;
                 _lastMeteorCount = 0;
+                // 初始化为当前状态，防止首 tick 误判“正在下雨/刚入夜”的事件跃迁。
+                _lastRaining = Main.raining;
+                _lastDayTime = Main.dayTime;
             }
 
             // 先结算“已消失的落星”再生成新的：先检测后生成可避免弹幕槽位复用造成误判。
@@ -153,15 +160,23 @@ namespace Starfall
                 _accumulator = 1.0;
         }
 
-        /// <summary>在某个在线玩家上方生成一颗服务端落星。</summary>
+        /// <summary>
+        /// 在某个在线玩家上方生成一颗服务端落星。
+        /// 遵循原版规则（Main.cs 中 Star.UpdateStars 仅当屏幕位于世界地表附近时运行）：
+        /// 只有身处地表层（position.Y ≤ 世界地表 + 1 格）的在线玩家才会触发落星；
+        /// 地下/深入洞穴的玩家不会出现落星。
+        /// </summary>
         private bool SpawnStar()
         {
+            float surfaceY = (float)(Main.worldSurface * 16.0) + 16f;
+
             var players = new List<TSPlayer>();
             if (TShock.Players != null)
             {
                 foreach (var p in TShock.Players)
                 {
-                    if (p != null && p.Active && p.TPlayer != null && !p.TPlayer.dead)
+                    if (p != null && p.Active && p.TPlayer != null && !p.TPlayer.dead &&
+                        p.TPlayer.position.Y <= surfaceY)
                         players.Add(p);
                 }
             }
@@ -268,7 +283,9 @@ namespace Starfall
             ApplyRain();
             ApplyWind();
             ApplySandstorm();
+            ApplyCoinRainChance();
             ApplyCoinRain();
+            ApplyMeteorShowerChance();
             ApplyMeteorShower();
         }
 
@@ -335,10 +352,40 @@ namespace Starfall
             NetMessage.SendData(MsgWorldData);
         }
 
-        /// <summary>钱币雨倍率：在原版刚启动一场钱币雨（预算由 0 变正）时，放大其数量预算。</summary>
+        /// <summary>
+        /// 钱币雨概率倍率：在“每次开始下雨”这个事件上，于原版 1/25 幸运判定之外额外补掷一份，
+        /// 命中即按原版规则手动开启钱币雨（预算赋值 + 广播）。总发生概率约 ×倍率。
+        /// </summary>
+        private void ApplyCoinRainChance()
+        {
+            double mult = Config.CoinRainChanceMultiplier;
+            if (mult <= 1.0)
+                return;
+
+            bool rainingNow = Main.raining;
+            if (rainingNow && !_lastRaining && Config.EnableWeather)
+            {
+                // 原版每次下雨开始时钱币雨的概率约为 1/25（受幸运影响，见 Main.StartRain）。
+                if (RollExtra(1.0 / 25.0, mult))
+                    StartCoinRain();
+            }
+
+            _lastRaining = rainingNow;
+        }
+
+        /// <summary>按原版 StartRain 的方式开启一场钱币雨（预算赋值 + 广播）。预算随后由产出倍率放大。</summary>
+        private void StartCoinRain()
+        {
+            float scale = (float)Main.maxTilesX / 4200f;
+            Main.coinRain = Main.rand.Next(75, 151) * 100 * 100;
+            Main.coinRain = (int)((float)Main.coinRain * scale);
+            ChatHelper.BroadcastChatMessage(NetworkText.FromKey(Lang.gen[93].Key), new Color(255, 200, 150));
+        }
+
+        /// <summary>钱币雨产出倍率：在原版刚启动一场钱币雨（预算由 0 变正）时，放大其数量预算。</summary>
         private void ApplyCoinRain()
         {
-            double mult = Config.CoinRainMultiplier;
+            double mult = Config.CoinRainYieldMultiplier;
             if (mult > 1.0 && _lastCoinRain <= 0.0 && Main.coinRain > 0)
             {
                 double scaled = Main.coinRain * mult;
@@ -348,10 +395,32 @@ namespace Starfall
             _lastCoinRain = Main.coinRain;
         }
 
-        /// <summary>陨石雨倍率：在原版刚开启一场陨石雨时，放大流星总数。</summary>
+        /// <summary>
+        /// 陨石雨概率倍率：原版每晚约 1/50 尝试坠落陨石、坠落失败再 1/3 转陨石雨（≈ 1/150）；
+        /// 插件在每次入夜额外补掷一份，命中即直接开启陨石雨，总发生概率约 ×倍率。
+        /// 与原版一致，需已击败克脑/世界吞噬者（NPC.downedBoss2）才有效。
+        /// </summary>
+        private void ApplyMeteorShowerChance()
+        {
+            double mult = Config.MeteorShowerChanceMultiplier;
+            if (mult <= 1.0)
+                return;
+
+            bool dayNow = Main.dayTime;
+            if (!dayNow && _lastDayTime && Config.EnableWeather
+                && NPC.downedBoss2 && Main.isThereAWorldSurface && !Main.remixWorld)
+            {
+                if (RollExtra((1.0 / 50.0) * (1.0 / 3.0), mult))
+                    WorldGen.StartMeteorShower();
+            }
+
+            _lastDayTime = dayNow;
+        }
+
+        /// <summary>陨石雨产出倍率：在原版刚开启一场陨石雨时，放大流星总数。</summary>
         private void ApplyMeteorShower()
         {
-            double mult = Config.MeteorShowerMultiplier;
+            double mult = Config.MeteorShowerYieldMultiplier;
             if (mult > 1.0 && _lastMeteorCount <= 0 && WorldGen.meteorShowerCount > 0)
             {
                 double scaled = WorldGen.meteorShowerCount * mult;
@@ -435,7 +504,9 @@ namespace Starfall
                 case "sand":
                 case "sandstorm":
                 case "coin":
+                case "coinyield":
                 case "meteor":
+                case "metyield":
                     SetWeather(args);
                     break;
 
@@ -481,7 +552,7 @@ namespace Starfall
                     break;
 
                 default:
-                    args.Player.SendErrorMessage("未知子命令。用法: /sf status|rate|day|rain|wind|sand|coin|meteor|drop|toggle|stars|weather|spawn|reload");
+                    args.Player.SendErrorMessage("未知子命令。用法: /sf status|rate|day|rain|wind|sand|coin|coinyield|meteor|metyield|drop|toggle|stars|weather|spawn|reload");
                     break;
             }
         }
@@ -512,12 +583,20 @@ namespace Starfall
                     SaveAndReply(args.Player, $"[Starfall] 沙尘暴倍率已设为 x{value}");
                     break;
                 case "coin":
-                    Config.CoinRainMultiplier = value;
-                    SaveAndReply(args.Player, $"[Starfall] 钱币雨倍率已设为 x{value}");
+                    Config.CoinRainChanceMultiplier = value;
+                    SaveAndReply(args.Player, $"[Starfall] 钱币雨概率倍率已设为 x{value}");
+                    break;
+                case "coinyield":
+                    Config.CoinRainYieldMultiplier = value;
+                    SaveAndReply(args.Player, $"[Starfall] 钱币雨产出倍率已设为 x{value}");
                     break;
                 case "meteor":
-                    Config.MeteorShowerMultiplier = value;
-                    SaveAndReply(args.Player, $"[Starfall] 陨石雨倍率已设为 x{value}");
+                    Config.MeteorShowerChanceMultiplier = value;
+                    SaveAndReply(args.Player, $"[Starfall] 陨石雨概率倍率已设为 x{value}");
+                    break;
+                case "metyield":
+                    Config.MeteorShowerYieldMultiplier = value;
+                    SaveAndReply(args.Player, $"[Starfall] 陨石雨产出倍率已设为 x{value}");
                     break;
             }
         }
@@ -576,8 +655,10 @@ namespace Starfall
             player.SendInfoMessage($"[Starfall] 落星频率 x{Config.StarMultiplier}  白天:{(Config.AllowDaytimeStars ? "开" : "关")} " +
                                    $"x{Config.DaytimeMultiplier}  伤害 {Config.Damage}");
             player.SendInfoMessage($"[Starfall] 天气倍率  雨 x{Config.RainMultiplier}  风 x{Config.WindMultiplier}  " +
-                                   $"沙尘暴 x{Config.SandstormMultiplier}  钱币雨 x{Config.CoinRainMultiplier}  陨石雨 x{Config.MeteorShowerMultiplier}");
-            player.SendInfoMessage("[Starfall] 用法: /sf rate|day|rain|wind|sand|coin|meteor|drop|toggle|stars|weather|spawn|reload");
+                                   $"沙尘暴 x{Config.SandstormMultiplier}");
+            player.SendInfoMessage($"[Starfall] 钱币雨 概率 x{Config.CoinRainChanceMultiplier} 产出 x{Config.CoinRainYieldMultiplier}  " +
+                                   $"陨石雨 概率 x{Config.MeteorShowerChanceMultiplier} 产出 x{Config.MeteorShowerYieldMultiplier}");
+            player.SendInfoMessage("[Starfall] 用法: /sf rate|day|rain|wind|sand|coin|coinyield|meteor|metyield|drop|toggle|stars|weather|spawn|reload");
         }
 
         private static bool TryParsePositive(CommandArgs args, int index, out double value)
