@@ -99,7 +99,8 @@ public static class FeatureMap
         ["moon"] = Feature.MoonPhase,
         ["moon_bonus"] = Feature.MoonPhase,
         ["sale"] = Feature.MoonSale,
-        ["merchant"] = Feature.TravelingMerchant
+        ["merchant"] = Feature.TravelingMerchant,
+        ["merchant_items"] = Feature.TravelingMerchant
     };
 
     private static readonly Regex Placeholder = new(@"\{(\w+)\}", RegexOptions.Compiled);

@@ -44,6 +44,12 @@ public class TerraNewsConfig
     [JsonProperty("StartupDelaySeconds")]
     public int StartupDelaySeconds { get; set; } = 5;
 
+    // 每日看板从触发到发布的延迟（真实秒）。原版旅商的货架是 Chest.SetupTravelShop()
+    // 在她刷出之前才掷好的，04:30 那一帧上读到的往往还是昨天的货；等世界把当天
+    // 的新货掷出来再读，日报报的才是今天。设为 0 则在触发帧上立即播报。
+    [JsonProperty("DailyDelaySeconds")]
+    public int DailyDelaySeconds { get; set; } = 2;
+
     // 沙尘暴与暴风雪怎么区分：auto（按地形扫描）/ sandstorm（一律沙尘暴）/ blizzard（一律暴风雪）。
     [JsonProperty("StormType")]
     public string StormType { get; set; } = "auto";
@@ -52,13 +58,17 @@ public class TerraNewsConfig
     [JsonProperty("Diagnostics")]
     public bool Diagnostics { get; set; }
 
-    // 每日看板，一行。占位符：{icon} {angler} {id} {moon} {sale} {merchant} {time}
-    // {merchant} 整段自带「旅商：」前缀并排在最末，货架为空时整段消失，不留悬空分号。
+    // 每日看板，两行：日报本体（月相、渔夫、月相特售）一行，旅商货架单独一行。
+    // 占位符：{icon} {angler} {id} {moon} {sale} {merchant} {merchant_items} {time}
+    // {merchant} 整段自带「旅商：」前缀，货架为空时整段变空；{merchant_items} 只给图标，
+    // 店名由模板自己写。旅商单独成行后，第二行货架为空时就只剩一个「旅商：」标签，
+    // 会被 TidySeparators 当成残段丢掉，整行不发，所以行尾也不会挂空标签。
     // 含 [i:物品ID] 的行必须用「一个颜色标签包住整行」的写法，否则图标会变成一串字符。
     [JsonProperty("DailyLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> DailyLines { get; set; } = new()
     {
-        "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}；{merchant}]"
+        "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}]",
+        "[c/4FC3F7:{merchant}]"
     };
 
     // 早期开发版那套七行看板，只为让老配置能被认出来并换成新默认而保留。
@@ -73,6 +83,10 @@ public class TerraNewsConfig
         "[c/7FD4FF:{angler}]",
         "[c/888888:（游戏时间 {time}）输入 /terranews 可随时重新查看今日任务]"
     };
+
+    // 旅商拆出去之前的单行默认模板。逐字一致的老配置会被迁到新的两行默认，
+    // 不用管理员手动改 TerraNews.json。
+    internal const string LegacySingleDailyLine = "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}；{merchant}]";
 
     // 沙尘暴与暴风雪。原版只有一个 Sandstorm 事件，雪与沙按地形区分，
     // 所以这里拆成两套模板，播报时才说对名字。这两种天气不改变任何货架，所以不带货物。
@@ -114,11 +128,12 @@ public class TerraNewsConfig
         BroadcastMinute = Math.Clamp(BroadcastMinute, 0, 59);
         TriggerWindowSeconds = Math.Clamp(TriggerWindowSeconds, 1, 120);
         StartupDelaySeconds = Math.Clamp(StartupDelaySeconds, 0, 60);
+        DailyDelaySeconds = Math.Clamp(DailyDelaySeconds, 0, 60);
 
         Features ??= new FeatureSwitches();
 
         if (DailyLines is null || DailyLines.Count == 0)
-            DailyLines = new List<string> { "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}；{merchant}]" };
+            DailyLines = new TerraNewsConfig().DailyLines;
         if (SandstormLines is null || SandstormLines.Count == 0)
             SandstormLines = new List<string> { "[c/E0A458:特别报道：沙尘暴]" };
         if (BlizzardLines is null || BlizzardLines.Count == 0)
@@ -206,11 +221,23 @@ public class TerraNewsConfig
         }
     }
 
-    // 把 DailyLines 逐字比对，凡是还等于早期那套七行看板的就换成新默认，
+    // 把 DailyLines 逐字比对，凡是还等于某一版旧默认的就换成当前默认，
     // 让升级真的改变玩家看到的东西。改过一个字的都原样保留——那是管理员自己的措辞。
     private static void MigrateDailyTemplates(TerraNewsConfig cfg)
     {
-        if (cfg.DailyLines is null || cfg.DailyLines.Count != LegacyDailyLines.Length)
+        if (cfg.DailyLines is null || cfg.DailyLines.Count == 0)
+            return;
+
+        // 旅商拆出去之前的单行默认也照搬同样的规则：没动过模板的配置
+        // 直接换成新的两行默认，不然这个升级永远落不到老服务上。
+        if (cfg.DailyLines.Count == 1
+            && string.Equals(cfg.DailyLines[0], LegacySingleDailyLine, StringComparison.Ordinal))
+        {
+            cfg.DailyLines = new TerraNewsConfig().DailyLines;
+            return;
+        }
+
+        if (cfg.DailyLines.Count != LegacyDailyLines.Length)
             return;
 
         for (int i = 0; i < LegacyDailyLines.Length; i++)

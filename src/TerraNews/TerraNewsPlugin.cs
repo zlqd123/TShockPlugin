@@ -18,8 +18,8 @@ public class TerraNewsPlugin : TerrariaPlugin
 
     public override string Name => "TerraNews";
     public override string Author => "不是现在";
-    // 尚未发布，版本号固定在 1.0.0。
-    public override Version Version => new(1, 0, 0);
+    // 版本 1.0.1。
+    public override Version Version => new(1, 0, 1);
     public override string Description => GetString("泰拉新闻：每天 04:30 播报月相、渔夫任务鱼与月相特售货架，大风、日食、血月、沙尘暴与暴风雪的特别报道。");
 
     private static string ConfigPath => Path.Combine(TShock.SavePath, ConfigFileName);
@@ -32,6 +32,10 @@ public class TerraNewsPlugin : TerrariaPlugin
     private DateTime? _pluginStart;
     private DateTime _lastDiag = DateTime.MinValue;
     private bool _ready;
+
+    // 每日看板已触发但还压在延迟期里：到 _dailyDueUtc 后才重新读取世界状态并发布。
+    private bool _dailyWaiting;
+    private DateTime _dailyDueUtc;
 
     public TerraNewsPlugin(Main game) : base(game)
     {
@@ -55,7 +59,10 @@ public class TerraNewsPlugin : TerrariaPlugin
         // TriggerWindowSeconds 这个键名有历史包袱，实际单位是游戏分钟（见 TriggerWindowTicks），
         // 所以窗口终点直接加它、不除 60。
         int windowEnd = (Config.BroadcastHour * 60 + Config.BroadcastMinute + Config.TriggerWindowSeconds) % 1440;
-        TShock.Log.Info(GetString($"[TerraNews] 已加载。总开关=开；每日播报 {Config.BroadcastHour:00}:{Config.BroadcastMinute:00}（游戏内时间，窗口 {Config.TriggerWindowSeconds} 游戏分钟，即到 {windowEnd / 60:00}:{windowEnd % 60:00}）。"));
+        TShock.Log.Info(GetString(
+            $"[TerraNews] 已加载。总开关=开；每日播报 {Config.BroadcastHour:00}:{Config.BroadcastMinute:00}"
+            + $"（游戏内时间，窗口 {Config.TriggerWindowSeconds} 游戏分钟，即到 {windowEnd / 60:00}:{windowEnd % 60:00}"
+            + $",触发后等 {Config.DailyDelaySeconds} 现实秒再检测发布）。"));
         TShock.Log.Info(GetString($"[TerraNews] 功能开关：{Config.Features.Summary()}"));
         TShock.Log.Info(GetString("[TerraNews] 任务鱼图标使用原版聊天物品标签 [i:物品ID]，玩家可悬停查看详情。"));
         TShock.Log.Info(GetString($"[TerraNews] 月相特售对照表来源：{MoonSale.SourceGameVersion}"));
@@ -118,14 +125,36 @@ public class TerraNewsPlugin : TerrariaPlugin
 
         _ready = true;
 
-        // 1) 每日看板 —— 严格限制在 04:30 窗口内，绝不在当天更晚的时候补播
+        // 1) 每日看板 —— 严格限制在 04:30 窗口内触发，绝不在当天更晚的时候补播；
+        //    触发后再等 DailyDelaySeconds 现实秒才读取世界状态并发布
         if (_trigger.Tick(time, dayTime, Config.BroadcastHour, Config.BroadcastMinute, TriggerWindowTicks))
         {
             // 窗口无论是否播报都会被消耗掉，区别只在于要不要真的发出去。
             _trigger.MarkAnnounced();
 
             if (features[Feature.DailyQuestBoard])
-                Broadcast(Config.DailyLines, BuildDailyContext(features), features);
+            {
+                // 旅商的货架是 Chest.SetupTravelShop() 在她刷出之前才掷好的，04:30
+                // 触发帧上读到的往往还是昨天的货。压住这几秒，等原版把当天的
+                // 新货掷出来，发布时再重新检测（BuildDailyContext 到那时才拼内容）。
+                if (Config.DailyDelaySeconds > 0)
+                {
+                    _dailyWaiting = true;
+                    _dailyDueUtc = DateTime.UtcNow.AddSeconds(Config.DailyDelaySeconds);
+                }
+                else
+                {
+                    Broadcast(Config.DailyLines, BuildDailyContext(features), features);
+                }
+            }
+        }
+
+        // 延迟期到点：重新检测，再发布。到点前服务器哪怕整场没再跑一个刻（玩家
+        // 全下了），恢复推进后的第一个刻也会把这条发出去，不会丢。
+        if (_dailyWaiting && DateTime.UtcNow >= _dailyDueUtc)
+        {
+            _dailyWaiting = false;
+            Broadcast(Config.DailyLines, BuildDailyContext(Config.Features), Config.Features);
         }
 
         // 2) 各种一次性事件
@@ -179,7 +208,9 @@ public class TerraNewsPlugin : TerrariaPlugin
     public static string GameClock() => GameTime.Format(Main.time, Main.dayTime);
 
     // 每日播报的可替换变量。鱼的一切信息都在 {icon} 的悬停提示里，这里只给得出 ID。
-    // {merchant} 整段自带「旅商：」前缀，货架为空时整段变空，所以它前面那个「；」会被清掉。
+    // {merchant} 整段自带「旅商：」前缀，货架为空时整段变空——默认模板把它单独放一行，
+    // 于是空货时那一行只剩「旅商：」，会被 TidySeparators 当成残段丢掉、整行不发。
+    // {merchant_items} 只给图标，店名由模板自己写，同样挂在 TravelingMerchant 开关下。
     private static Dictionary<string, string> BuildDailyContext(FeatureSwitches features)
     {
         int netId = CurrentQuestFishId;
@@ -195,7 +226,9 @@ public class TerraNewsPlugin : TerrariaPlugin
                 ? MoonSale.Render(MoonSale.Today(Main.moonPhase, Main.remixWorld, Main.tenthAnniversaryWorld))
                 : string.Empty,
             ["merchant"] = features[Feature.TravelingMerchant] ? WorldEventWatcher.MerchantRow(Main.travelShop) : string.Empty,
-            ["merchant_items"] = WorldEventWatcher.MerchantIconRow(WorldEventWatcher.MerchantStock(Main.travelShop)),
+            ["merchant_items"] = features[Feature.TravelingMerchant]
+                ? WorldEventWatcher.MerchantIconRow(WorldEventWatcher.MerchantStock(Main.travelShop))
+                : string.Empty,
             ["time"] = GameClock(),
             ["id"] = netId.ToString()
         };

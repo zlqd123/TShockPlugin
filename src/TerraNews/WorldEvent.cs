@@ -1,7 +1,7 @@
 namespace TerraNews;
 
 // 世界事件的上升沿检测，只在事件出现的那一刻报一次，不跟进强度变化。
-// 旅商的货架不进这里：它不是上升沿事件，而是每天日报最末的一段固定内容，
+// 旅商的货架不进这里：它不是上升沿事件，而是每天日报里单独成行的一段固定内容，
 // 直接读 Main.travelShop 就行，货由 Chest.SetupTravelShop() 在刷出她之前掷好。
 public sealed class WorldEventWatcher
 {
@@ -63,8 +63,9 @@ public sealed class WorldEventWatcher
         return string.Join(string.Empty, stock.Select(id => "[i:" + id + "]"));
     }
 
-    // 旅商那一段，排在日报最末，格式和其他店一样。货架是空的就不产出这一段，
-    // 免得日报尾部留下一个光秃秃的「旅商：」。Main.travelShop 由
+    // 旅商那一段，默认模板里单独占一行，格式和其他店一样。货架是空的就不产出
+    // 这一段：在单行模板里表现为不留悬空分号，在单独成行的默认模板里表现为
+    // 整行不发，行尾不会挂一个光秃秃的「旅商：」。Main.travelShop 由
     // Chest.SetupTravelShop() 在刷出旅商之前掷好，所以人不在场时读到的是她上次的货。
     public static string MerchantRow(int[]? travelShop)
     {
