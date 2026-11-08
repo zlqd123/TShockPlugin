@@ -25,6 +25,7 @@
   <Project Path="src/BedSet/BedSet.csproj" />
   <Project Path="src/BetterWhitelist/BetterWhitelist.csproj" />
   <Project Path="src/BossLock/BossLock.csproj" />
+  <Project Path="src/BottleRefund/BottleRefund.csproj" />
   <Project Path="src/BridgeBuilder/BridgeBuilder.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
