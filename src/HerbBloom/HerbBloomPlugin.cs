@@ -30,7 +30,7 @@ namespace HerbBloom
     public class HerbBloomPlugin : TerrariaPlugin
     {
         public override string Name => "HerbBloom";
-        public override string Author => "HerbBloom";
+        public override string Author => "不是现在";
         public override string Description => "全草药无视条件常开（参考霜花逻辑），开花后不回退，生长速度可配置。";
         public override Version Version => new Version(1, 0, 0);
 

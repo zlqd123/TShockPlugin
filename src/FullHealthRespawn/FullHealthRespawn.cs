@@ -16,7 +16,7 @@ namespace FullHealthRespawn;
 public class FullHealthRespawn : TerrariaPlugin
 {
     public override string Name => System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
-    public override string Author => "MiMo";
+    public override string Author => "不是现在";
     public override string Description => GetString("复活满血");
     public override Version Version => new Version(1, 2, 0);
 

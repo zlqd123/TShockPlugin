@@ -42,7 +42,7 @@ namespace BottleRefund
     public class BottleRefundPlugin : TerrariaPlugin
     {
         public override string Name => "BottleRefund";
-        public override string Author => "词库助手";
+        public override string Author => "不是现在";
         public override string Description => "喝药自动返还玻璃瓶：延迟数秒全面结算背包流水后发放，批量堆叠/入箱/丢弃不误发。";
         public override Version Version => new Version(1, 0, 0);
 

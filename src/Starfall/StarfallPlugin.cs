@@ -26,7 +26,7 @@ namespace Starfall
     public class StarfallPlugin : TerrariaPlugin
     {
         public override string Name => "Starfall";
-        public override string Author => "Starfall (TShock port of Fargo's Fallen Stars)";
+        public override string Author => "不是现在";
         public override string Description => GetString("服务端控制坠落之星生成速率、掉落与天气事件倍率。");
         public override Version Version => new Version(2, 0, 2, 0);
 

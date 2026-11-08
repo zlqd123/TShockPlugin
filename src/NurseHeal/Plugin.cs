@@ -23,7 +23,7 @@ namespace NurseHeal;
 [ApiVersion(2, 1)]
 public class Plugin : TerrariaPlugin
 {
-    public override string Author => "词库助手";
+    public override string Author => "不是现在";
 
     public override string Description => "与护士对话自动按原版定价扣费并回满血";
 

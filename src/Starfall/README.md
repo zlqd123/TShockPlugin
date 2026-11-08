@@ -1,6 +1,6 @@
 # Starfall 坠落之星 · 天气倍率
 
-- 作者: Starfall (TShock port of Fargo's Fallen Stars)
+- 作者: 不是现在
 - 出处: TShock插件库
 - 在**原版（vanilla）服务器**上复刻 tModLoader 模组 [Fargo's Fallen Stars](https://steamcommunity.com/sharedfiles/filedetails/?id=2797510870) 的坠落之星功能，并附加原版天气事件（下雨 / 风 / 沙尘暴 / 钱币雨 / 陨石雨）的倍率控制。
 
