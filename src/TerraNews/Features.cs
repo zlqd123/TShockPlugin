@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace TerraNews;
 
@@ -22,26 +23,61 @@ public enum Feature
     ServerLog
 }
 
-// 开关组，默认为全开。
+// 开关组，默认为全开。JSON 键名 v1.1.2 起为中文（与 JsonKeys 一一对应）。
 public class FeatureSwitches
 {
+    [JsonProperty("每日看板")]
     public bool DailyQuestBoard { get; set; } = true;
+    [JsonProperty("任务鱼图标")]
     public bool QuestFishIcon { get; set; } = true;
+    [JsonProperty("渔夫状态")]
     public bool AnglerStatus { get; set; } = true;
+    [JsonProperty("月相")]
     public bool MoonPhase { get; set; } = true;
+    [JsonProperty("月相特售")]
     public bool MoonSale { get; set; } = true;
+    [JsonProperty("沙尘暴播报")]
     public bool Sandstorm { get; set; } = true;
+    [JsonProperty("大风播报")]
     public bool WindyDay { get; set; } = true;
+    [JsonProperty("日食播报")]
     public bool Eclipse { get; set; } = true;
+    [JsonProperty("血月播报")]
     public bool BloodMoon { get; set; } = true;
+    [JsonProperty("满月草药提醒")]
     public bool FullMoonHerb { get; set; } = true;
+    [JsonProperty("血月草药提醒")]
     public bool BloodMoonHerb { get; set; } = true;
+    [JsonProperty("雨天草药提醒")]
     public bool RainHerb { get; set; } = true;
+    [JsonProperty("火焰花提醒")]
     public bool FireblossomHerb { get; set; } = true;
+    [JsonProperty("旅商货架")]
     public bool TravelingMerchant { get; set; } = true;
+    [JsonProperty("控制台日志")]
     public bool ServerLog { get; set; } = true;
 
     public static readonly Feature[] All = (Feature[])Enum.GetValues(typeof(Feature));
+
+    // 每个功能在配置文件里对应的中文键名，迁移逻辑按此查找。
+    public static readonly IReadOnlyDictionary<Feature, string> JsonKeys = new Dictionary<Feature, string>
+    {
+        [Feature.DailyQuestBoard] = "每日看板",
+        [Feature.QuestFishIcon] = "任务鱼图标",
+        [Feature.AnglerStatus] = "渔夫状态",
+        [Feature.MoonPhase] = "月相",
+        [Feature.MoonSale] = "月相特售",
+        [Feature.Sandstorm] = "沙尘暴播报",
+        [Feature.WindyDay] = "大风播报",
+        [Feature.Eclipse] = "日食播报",
+        [Feature.BloodMoon] = "血月播报",
+        [Feature.FullMoonHerb] = "满月草药提醒",
+        [Feature.BloodMoonHerb] = "血月草药提醒",
+        [Feature.RainHerb] = "雨天草药提醒",
+        [Feature.FireblossomHerb] = "火焰花提醒",
+        [Feature.TravelingMerchant] = "旅商货架",
+        [Feature.ServerLog] = "控制台日志"
+    };
 
     public bool this[Feature feature] => feature switch
     {

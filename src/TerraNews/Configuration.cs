@@ -22,41 +22,41 @@ public static class LegacyFeatureKeys
 public class TerraNewsConfig
 {
     // 总开关：关闭时插件完全静默，得改配置再重启才会生效。
-    [JsonProperty("Enabled")]
+    [JsonProperty("启用")]
     public bool Enabled { get; set; } = true;
 
     // 每项功能单独开关，默认全开，所以新配置直接就是完整播报。
-    [JsonProperty("Features", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("功能开关", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public FeatureSwitches Features { get; set; } = new();
 
     // 每日播报的游戏内小时（0-23）；04:30 正是渔夫换新任务的时刻。
-    [JsonProperty("BroadcastHour")]
+    [JsonProperty("播报小时")]
     public int BroadcastHour { get; set; } = 4;
 
     // 每日播报的游戏内分钟（0-59）。
-    [JsonProperty("BroadcastMinute")]
+    [JsonProperty("播报分钟")]
     public int BroadcastMinute { get; set; } = 30;
 
     // 触发窗口，单位是游戏分钟；默认 30 即覆盖 04:30-05:00。
-    [JsonProperty("TriggerWindowSeconds")]
+    [JsonProperty("触发窗口秒数")]
     public int TriggerWindowSeconds { get; set; } = 30;
 
     // 插件加载后保持静默多久（真实秒）。
-    [JsonProperty("StartupDelaySeconds")]
+    [JsonProperty("启动延迟秒数")]
     public int StartupDelaySeconds { get; set; } = 5;
 
     // 每日看板从触发到发布的延迟（真实秒）。原版旅商的货架是 Chest.SetupTravelShop()
     // 在她刷出之前才掷好的，04:30 那一帧上读到的往往还是昨天的货；等世界把当天
     // 的新货掷出来再读，日报报的才是今天。设为 0 则在触发帧上立即播报。
-    [JsonProperty("DailyDelaySeconds")]
+    [JsonProperty("看板延迟秒数")]
     public int DailyDelaySeconds { get; set; } = 2;
 
     // 沙尘暴与暴风雪怎么区分：auto（按地形扫描）/ sandstorm（一律沙尘暴）/ blizzard（一律暴风雪）。
-    [JsonProperty("StormType")]
+    [JsonProperty("风暴判定")]
     public string StormType { get; set; } = "auto";
 
     // 每秒输出一行触发器正在观察的状态。
-    [JsonProperty("Diagnostics")]
+    [JsonProperty("诊断日志")]
     public bool Diagnostics { get; set; }
 
     // 每日看板，两行：日报本体（月相、渔夫、月相特售）一行，旅商货架单独一行。
@@ -65,7 +65,7 @@ public class TerraNewsConfig
     // 店名由模板自己写。旅商单独成行后，第二行货架为空时就只剩一个「旅商：」标签，
     // 会被 TidySeparators 当成残段丢掉，整行不发，所以行尾也不会挂空标签。
     // 含 [i:物品ID] 的行必须用「一个颜色标签包住整行」的写法，否则图标会变成一串字符。
-    [JsonProperty("DailyLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("每日看板模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> DailyLines { get; set; } = new()
     {
         "[c/4FC3F7:泰拉日报：{moon}；渔夫：{icon}；{sale}]",
@@ -91,33 +91,33 @@ public class TerraNewsConfig
 
     // 沙尘暴与暴风雪。原版只有一个 Sandstorm 事件，雪与沙按地形区分，
     // 所以这里拆成两套模板，播报时才说对名字。这两种天气不改变任何货架，所以不带货物。
-    [JsonProperty("SandstormLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("沙尘暴模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> SandstormLines { get; set; } = new()
     {
         "[c/E0A458:特别报道：沙尘暴]"
     };
 
-    [JsonProperty("BlizzardLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("暴风雪模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> BlizzardLines { get; set; } = new()
     {
         "[c/E0A458:特别报道：暴风雪]"
     };
 
     // 大风天。占位符：{items} {count} {time} {moon}。
-    [JsonProperty("WindyLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("大风模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> WindyLines { get; set; } = new()
     {
         "[c/9AD4C8:特别报道：大风特卖，{items}]"
     };
 
     // 日食与血月。两者都带货架，用同一个 {items} 占位符。
-    [JsonProperty("EclipseLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("日食模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> EclipseLines { get; set; } = new()
     {
         "[c/B39DDB:特别报道：日食特卖，{items}]"
     };
 
-    [JsonProperty("BloodMoonLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("血月模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> BloodMoonLines { get; set; } = new()
     {
         "[c/8B0000:特别报道：血月特卖，{items}]"
@@ -128,19 +128,19 @@ public class TerraNewsConfig
     // 水叶草在下雨时开花，开花时才采得到种子。血月正逢满月的那一晚只发血月那条，
     // 同一晚不连发两条死亡草提醒。占位符只有 {time} 和 {moon}。
     // 含 [i:物品ID] 图标的行必须用「一个颜色标签包住整行」的写法，理由同 DailyLines。
-    [JsonProperty("FullMoonHerbLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("满月草药模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> FullMoonHerbLines { get; set; } = new()
     {
         $"[c/9CB767:草药提醒：今夜满月，[i:{ItemID.Deathweed}]死亡草开花了，记得采种]"
     };
 
-    [JsonProperty("BloodMoonHerbLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("血月草药模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> BloodMoonHerbLines { get; set; } = new()
     {
         $"[c/8B0000:草药提醒：血月夜，[i:{ItemID.Deathweed}]死亡草开花了，记得采种]"
     };
 
-    [JsonProperty("RainHerbLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("雨天草药模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> RainHerbLines { get; set; } = new()
     {
         $"[c/4FC3F7:草药提醒：下雨了，[i:{ItemID.Waterleaf}]水叶草开花了，记得采种]"
@@ -148,7 +148,7 @@ public class TerraNewsConfig
 
     // 火焰花在下午 3:30–7:30（游戏内）开花，或泡在岩浆里随时可采；这里在开花后的
     // 3:45 提醒一次，每天只发这一条。占位符同上，只有 {time} 和 {moon}。
-    [JsonProperty("FireblossomHerbLines", ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    [JsonProperty("火焰花模板", ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public List<string> FireblossomHerbLines { get; set; } = new()
     {
         $"[c/E2621B:草药提醒：{{time}}，[i:{ItemID.Fireblossom}]火焰花开花了，记得采种]"
@@ -204,6 +204,7 @@ public class TerraNewsConfig
             }
 
             string text = File.ReadAllText(path);
+            text = RenameEnglishKeys(text);
             var cfg = JsonConvert.DeserializeObject<TerraNewsConfig>(text);
             if (cfg is null)
             {
@@ -236,7 +237,63 @@ public class TerraNewsConfig
         }
     }
 
-    // 1.0 的平铺布尔键，只在新的 Features 块里缺该键时才搬进去。
+    // v1.1.2：英文键名 → 中文键名。老配置先就地改名再反序列化，所有值原样保留；
+    // 已经是中文键的文件在此处不会被碰到。1.0 的平铺旧键（ShowItemIcon 等）不在此列，
+    // 仍交给 MigrateLegacySwitches 处理。
+    private static readonly IReadOnlyDictionary<string, string> RenamedKeys = new Dictionary<string, string>(StringComparer.Ordinal)
+    {
+        ["Enabled"] = "启用",
+        ["Features"] = "功能开关",
+        ["BroadcastHour"] = "播报小时",
+        ["BroadcastMinute"] = "播报分钟",
+        ["TriggerWindowSeconds"] = "触发窗口秒数",
+        ["StartupDelaySeconds"] = "启动延迟秒数",
+        ["DailyDelaySeconds"] = "看板延迟秒数",
+        ["StormType"] = "风暴判定",
+        ["Diagnostics"] = "诊断日志",
+        ["DailyLines"] = "每日看板模板",
+        ["SandstormLines"] = "沙尘暴模板",
+        ["BlizzardLines"] = "暴风雪模板",
+        ["WindyLines"] = "大风模板",
+        ["EclipseLines"] = "日食模板",
+        ["BloodMoonLines"] = "血月模板",
+        ["FullMoonHerbLines"] = "满月草药模板",
+        ["BloodMoonHerbLines"] = "血月草药模板",
+        ["RainHerbLines"] = "雨天草药模板",
+        ["FireblossomHerbLines"] = "火焰花模板"
+    };
+
+    private static string RenameEnglishKeys(string json)
+    {
+        JObject root;
+        try
+        {
+            root = JObject.Parse(json);
+        }
+        catch
+        {
+            return json;
+        }
+
+        void Rename(JObject obj)
+        {
+            foreach (KeyValuePair<string, string> kv in RenamedKeys)
+            {
+                JToken? token = obj[kv.Key];
+                if (token is null || obj[kv.Value] is not null)
+                    continue;
+                token.Remove();
+                obj[kv.Value] = token;
+            }
+        }
+
+        Rename(root);
+        if (root["功能开关"] is JObject features)
+            Rename(features);
+        return root.ToString(Formatting.None);
+    }
+
+    // 1.0 的平铺布尔键，只在新的功能开关块里缺该键时才搬进去。
     private static void MigrateLegacySwitches(TerraNewsConfig cfg, string json)
     {
         JObject root;
@@ -249,14 +306,14 @@ public class TerraNewsConfig
             return;
         }
 
-        JToken? features = root["Features"];
+        JToken? features = root["功能开关"];
         foreach (KeyValuePair<string, Feature> entry in LegacyFeatureKeys.Map)
         {
             JToken? legacy = root[entry.Key];
             if (legacy is null || legacy.Type != JTokenType.Boolean)
                 continue;
 
-            if (features is JObject obj && obj[entry.Value.ToString()] is not null)
+            if (features is JObject obj && obj[FeatureSwitches.JsonKeys[entry.Value]] is not null)
                 continue;
 
             cfg.Features.Set(entry.Value, legacy.Value<bool>());
