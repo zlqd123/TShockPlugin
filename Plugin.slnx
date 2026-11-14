@@ -26,7 +26,6 @@
   <Project Path="src/BetterWhitelist/BetterWhitelist.csproj" />
   <Project Path="src/BossLock/BossLock.csproj" />
   <Project Path="src/BottleRefund/BottleRefund.csproj" />
-  <Project Path="src/BottleRefund/BottleRefund.csproj" />
   <Project Path="src/BridgeBuilder/BridgeBuilder.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
@@ -49,7 +48,6 @@
   <Project Path="src/DamageStatistic/DamageStatistic.csproj" />
   <Project Path="src/DataSync/DataSync.csproj" />
   <Project Path="src/DeathDrop/DeathDrop.csproj" />
-  <Project Path="src/DailyMerchant/DailyMerchant.csproj" />
   <Project Path="src/DeltaForce.Core/DeltaForce.Core.csproj" />
   <Project Path="src/DeltaForce.Game/DeltaForce.Game.csproj" />
   <Project Path="src/DeltaForce.Protocol/DeltaForce.Protocol.csproj" />
@@ -82,7 +80,6 @@
   <Project Path="src/GroundCraft/GroundCraft.csproj" />
   <Project Path="src/HardPlayerDrop/HardPlayerDrop.csproj" />
   <Project Path="src/HelpPlus/HelpPlus.csproj" />
-  <Project Path="src/HerbBloom/HerbBloom.csproj" />
   <Project Path="src/HerbBloom/HerbBloom.csproj" />
   <Project Path="src/History/History.csproj" />
   <Project Path="src/HouseRegion/HouseRegion.csproj" />
@@ -145,7 +142,6 @@
   <Project Path="src/SpawnInfra/SpawnInfra.csproj" />
   <Project Path="src/Starfall/Starfall.csproj" />
   <Project Path="src/SpclPerm/SpclPerm.csproj" />
-  <Project Path="src/Starfall/Starfall.csproj" />
   <Project Path="src/StatusTextManager/StatusTextManager.csproj" />
   <Project Path="src/Submodules/TrProtocol/src/TrProtocol.SerializerGenerator/TrProtocol.SerializerGenerator.csproj" />
   <Project Path="src/Submodules/TrProtocol/src/TrProtocol/TrProtocol.csproj" />
@@ -153,7 +149,6 @@
   <Project Path="src/SurvivalCrisis/SurvivalCrisis.csproj" />
   <Project Path="src/SwitchCommands/SwitchCommands.csproj" />
   <Project Path="src/TeleportRequest/TeleportRequest.csproj" />
-  <Project Path="src/TerraNews/TerraNews.csproj" />
   <Project Path="src/TerraNews/TerraNews.csproj" />
   <Project Path="src/TimeRate/TimeRate.csproj" />
   <Project Path="src/TimerKeeper/TimerKeeper.csproj" />
