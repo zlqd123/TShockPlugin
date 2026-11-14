@@ -1,21 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<!-- 本插件源码按“引用类型可空”关闭编写（与独立工程一致），避免可空性噪音警告 -->
-		<Nullable>disable</Nullable>
-		<!--
-			本插件按 TShock 6.2.1 的 API 编写（例如 Item.NewItem(IEntitySource, Vector2, int, int)
-			为 6.2.1（Terraria 1.4.5.8）新增的重载，6.1.0 没有），故单独锁定编译期版本；
-			运行环境要求 TShock ≥ 6.2.1。
-		-->
-		<TShockPackageVersion>6.2.1</TShockPackageVersion>
-	</PropertyGroup>
-
-	<Import Project="..\..\template.targets" />
-
-</Project>
-<Project Sdk="Microsoft.NET.Sdk">
-
 	<Import Project="..\..\template.targets" />
 
 	<PropertyGroup>
