@@ -279,10 +279,12 @@ public class TerraNewsConfig
         {
             foreach (KeyValuePair<string, string> kv in RenamedKeys)
             {
-                JToken? token = obj[kv.Key];
-                if (token is null || obj[kv.Value] is not null)
+                // 注意：必须用 JObject.Remove(key) 删整个属性；
+                // obj[key].Remove() 删的是 JProperty 的值节点，会抛 JProperty 异常
+                if (!obj.ContainsKey(kv.Key) || obj.ContainsKey(kv.Value))
                     continue;
-                token.Remove();
+                JToken? token = obj[kv.Key];
+                obj.Remove(kv.Key);
                 obj[kv.Value] = token;
             }
         }

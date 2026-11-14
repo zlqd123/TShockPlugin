@@ -20,7 +20,7 @@ public class TerraNewsPlugin : TerrariaPlugin
     public override string Name => "TerraNews";
     public override string Author => "不是现在";
     // 版本 1.1.2：配置键名汉化（含英文旧键自动改名迁移），基于上游 1.1.1。
-    public override Version Version => new(1, 1, 2);
+    public override Version Version => new(1, 1, 3);
     public override string Description => GetString("泰拉新闻：每天 04:30 播报月相、渔夫任务鱼与月相特售货架，大风、日食、血月、沙尘暴与暴风雪的特别报道，满月/血月/雨天/午后附带草药采收提醒。");
 
     private static string ConfigPath => Path.Combine(TShock.SavePath, ConfigFileName);
