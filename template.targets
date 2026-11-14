@@ -6,7 +6,7 @@
 		<LangVersion>latest</LangVersion>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <!-- 插件可在 csproj 中于 <Import> 本文件之前设置 TShockPackageVersion 覆盖编译期版本 -->
-        <TShockPackageVersion Condition="'$(TShockPackageVersion)' == ''">6.1.0</TShockPackageVersion>
+        <TShockPackageVersion Condition="'$(TShockPackageVersion)' == ''">6.2.1</TShockPackageVersion>
     </PropertyGroup>
 
     <PropertyGroup>

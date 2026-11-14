@@ -26,6 +26,7 @@
   <Project Path="src/BetterWhitelist/BetterWhitelist.csproj" />
   <Project Path="src/BossLock/BossLock.csproj" />
   <Project Path="src/BottleRefund/BottleRefund.csproj" />
+  <Project Path="src/BottleRefund/BottleRefund.csproj" />
   <Project Path="src/BridgeBuilder/BridgeBuilder.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
@@ -41,12 +42,14 @@
   <Project Path="src/CNPCShop/CNPCShop.csproj" />
   <Project Path="src/ConsoleSql/ConsoleSql.csproj" />
   <Project Path="src/ConvertWorld/ConvertWorld.csproj" />
+  <Project Path="src/CreateSpawn/CreateSpawn.csproj" />
   <Project Path="src/CriticalHit/CriticalHit.csproj" />
   <Project Path="src/DailyMerchant/DailyMerchant.csproj" />
   <Project Path="src/DamageRuleLoot/DamageRuleLoot.csproj" />
   <Project Path="src/DamageStatistic/DamageStatistic.csproj" />
   <Project Path="src/DataSync/DataSync.csproj" />
   <Project Path="src/DeathDrop/DeathDrop.csproj" />
+  <Project Path="src/DailyMerchant/DailyMerchant.csproj" />
   <Project Path="src/DeltaForce.Core/DeltaForce.Core.csproj" />
   <Project Path="src/DeltaForce.Game/DeltaForce.Game.csproj" />
   <Project Path="src/DeltaForce.Protocol/DeltaForce.Protocol.csproj" />
@@ -59,11 +62,12 @@
   <Project Path="src/Economics.Core/Economics.Core.csproj" />
   <Project Path="src/Economics.Deal/Economics.Deal.csproj" />
   <Project Path="src/Economics.NPC/Economics.NPC.csproj" />
+  <Project Path="src/Economics.Plugin/Economics.Plugin.csproj" />
   <Project Path="src/Economics.Projectile/Economics.Projectile.csproj" />
   <Project Path="src/Economics.Regain/Economics.Regain.csproj" />
   <Project Path="src/Economics.RPG/Economics.RPG.csproj" />
-  <Project Path="src/Economics.Shop/Economics.Shop.csproj" />
   <Project Path="src/Economics.Script/Economics.Script.csproj" />
+  <Project Path="src/Economics.Shop/Economics.Shop.csproj" />
   <Project Path="src/Economics.Skill/Economics.Skill.csproj" />
   <Project Path="src/Economics.Task/Economics.Task.csproj" />
   <Project Path="src/Economics.WeaponPlus/Economics.WeaponPlus.csproj" />
@@ -78,6 +82,7 @@
   <Project Path="src/GroundCraft/GroundCraft.csproj" />
   <Project Path="src/HardPlayerDrop/HardPlayerDrop.csproj" />
   <Project Path="src/HelpPlus/HelpPlus.csproj" />
+  <Project Path="src/HerbBloom/HerbBloom.csproj" />
   <Project Path="src/HerbBloom/HerbBloom.csproj" />
   <Project Path="src/History/History.csproj" />
   <Project Path="src/HouseRegion/HouseRegion.csproj" />
@@ -99,6 +104,7 @@
   <Project Path="src/Noagent/Noagent.csproj" />
   <Project Path="src/NormalDropsBags/NormalDropsBags.csproj" />
   <Project Path="src/NoteWall/NoteWall.csproj" />
+  <Project Path="src/NurseHeal/NurseHeal.csproj" />
   <Project Path="src/OnlineGiftPackage/OnlineGiftPackage.csproj" />
   <Project Path="src/PacketsStop/PacketsStop.csproj" />
   <Project Path="src/PermaBuff/PermaBuff.csproj" />
@@ -137,6 +143,7 @@
   <Project Path="src/SmartRegions/SmartRegions.csproj" />
   <Project Path="src/SourceGen/SourceGen.csproj" />
   <Project Path="src/SpawnInfra/SpawnInfra.csproj" />
+  <Project Path="src/Starfall/Starfall.csproj" />
   <Project Path="src/SpclPerm/SpclPerm.csproj" />
   <Project Path="src/Starfall/Starfall.csproj" />
   <Project Path="src/StatusTextManager/StatusTextManager.csproj" />
@@ -147,6 +154,7 @@
   <Project Path="src/SwitchCommands/SwitchCommands.csproj" />
   <Project Path="src/TeleportRequest/TeleportRequest.csproj" />
   <Project Path="src/TerraNews/TerraNews.csproj" />
+  <Project Path="src/TerraNews/TerraNews.csproj" />
   <Project Path="src/TimeRate/TimeRate.csproj" />
   <Project Path="src/TimerKeeper/TimerKeeper.csproj" />
   <Project Path="src/TownNPCHomes/TownNPCHomes.csproj" />
@@ -155,7 +163,6 @@
   <Project Path="src/VeinMiner/VeinMiner.csproj" />
   <Project Path="src/VotePlus/VotePlus.csproj" />
   <Project Path="src/WeaponPlus/WeaponPlus.csproj" />
-  <Project Path="src/WorldEdit/WorldEdit.csproj" />
   <Project Path="src/WikiLangPackLoader/WikiLangPackLoader.csproj" />
-  <Project Path="src/CreateSpawn/CreateSpawn.csproj" />
+  <Project Path="src/WorldEdit/WorldEdit.csproj" />
 </Solution>

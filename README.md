@@ -74,6 +74,7 @@
 | [BedSet](./src/BedSet/README.md) | 设置并记录重生点 | [LazyAPI](./src/LazyAPI/README.md) |
 | [BetterWhitelist](./src/BetterWhitelist/README.md) | 白名单插件 | [LazyAPI](./src/LazyAPI/README.md) |
 | [BossLock](./src/BossLock/README.md) | 进度锁插件 |  |
+| [BottleRefund](./src/BottleRefund/README.md) | 喝药自动返还玻璃瓶：延迟数秒全面结算背包流水后发放，合并堆叠/入箱/丢弃等批量操作不会误发，生长无需任何指令 |  |
 | [BridgeBuilder](./src/BridgeBuilder/README.md) | 快速铺桥 | [LazyAPI](./src/LazyAPI/README.md) |
 | [BuildMaster](./src/BuildMaster/README.md) | 豆沙小游戏·建筑大师模式 | [MiniGamesAPI](./src/MiniGamesAPI/README.md) |
 | [CaiBotLite](./src/CaiBotLite/README.md) | CaiBotLite 官方机器人适配插件 | [linq2db]() [GenerateMap](./src/GenerateMap/README.md) |
@@ -93,6 +94,7 @@
 | [CreateSpawn](./src/CreateSpawn/README.md) | 出生点建筑生成 | [LazyAPI](./src/LazyAPI/README.md) |
 | [CriticalHit](./src/CriticalHit/README.md) | 击打提示 |  |
 | [Crossplay](https://github.com/UnrealMultiple/Crossplay/blob/main/README.md) | 跨版本游玩 |  |
+| [DailyMerchant](./src/DailyMerchant/README.md) | 旅商与骷髅商人每天到访，各自可单独开关 |  |
 | [DamageRuleLoot](./src/DamageRuleLoot/README.md) | 伤害规则掉落 |  |
 | [DamageStatistic](./src/DamageStatistic/README.md) | 在每次 Boss 战后显示每个玩家造成的伤害 |  |
 | [DataSync](./src/DataSync/README.md) | 进度同步 |  |
@@ -109,6 +111,7 @@
 | [Economics.Core](./src/Economics.Core/README.md) | 经济插件前置 |  |
 | [Economics.Deal](./src/Economics.Deal/README.md) | 交易插件 | [Economics.Core](./src/Economics.Core/README.md) |
 | [Economics.NPC](./src/Economics.NPC/README.md) | 自定义怪物奖励 | [Economics.Core](./src/Economics.Core/README.md) [Economics.Script]() |
+| [Economics.Plugin](./src/Economics.Plugin/README.md) | 用于JavaScript开发的插件 | [Economics.Script]() |
 | [Economics.Projectile](./src/Economics.Projectile/README.md) | 自定义弹幕 | [Economics.Core](./src/Economics.Core/README.md) [Economics.RPG](./src/Economics.RPG/README.md) |
 | [Economics.Regain](./src/Economics.Regain/README.md) | 物品回收 | [Economics.Core](./src/Economics.Core/README.md) |
 | [Economics.RPG](./src/Economics.RPG/README.md) | RPG | [Economics.Core](./src/Economics.Core/README.md) |
@@ -121,6 +124,7 @@
 | [Ezperm](./src/Ezperm/README.md) | 批量改权限 |  |
 | [FishShop](https://github.com/UnrealMultiple/TShockFishShop/blob/master/README.md) | 鱼店 |  |
 | [FullHealthRespawn](./src/FullHealthRespawn/README.md) | 复活满血 |  |
+| [FullHealthRespawn](./src/FullHealthRespawn/README.md) | 复活满血 |  |
 | [GenerateMap](./src/GenerateMap/README.md) | 生成地图 |  |
 | [GhostView](./src/GhostView/README.md) | 死亡后能在鬼魂状态下观战，重连不刷新复活cd |  |
 | [GolfRewards](./src/GolfRewards/README.md) | 高尔夫奖励 |  |
@@ -128,6 +132,7 @@
 | [GroundCraft](./src/GroundCraft/README.md) | 把掉落物丢在一起自动合成，支持 JSON 配方、条件、精确匹配和螺旋动画 |  |
 | [HardPlayerDrop](./src/HardPlayerDrop/README.md) | 硬核死亡掉生命水晶 |  |
 | [HelpPlus](./src/HelpPlus/README.md) | 修复和增强 Help 命令 |  |
+| [HerbBloom](./src/HerbBloom/README.md) | 全草药常开：成熟即开花、无视昼夜/天气/月相条件，开花后永不回退；生长速度默认保持原版（可配置加速） |  |
 | [History](./src/History/README.md) | 历史图格记录 |  |
 | [HouseRegion](./src/HouseRegion/README.md) | 圈地插件 | [LazyAPI](./src/LazyAPI/README.md) |
 | [Invincibility](./src/Invincibility/README.md) | 限时无敌 |  |
@@ -148,6 +153,7 @@
 | [Noagent](./src/Noagent/README.md) | 禁止代理 ip 进入 |  |
 | [NormalDropsBags](./src/NormalDropsBags/README.md) | 普通难度宝藏袋 |  |
 | [NoteWall](./src/NoteWall/README.md) | 留言墙 | [LazyAPI](./src/LazyAPI/README.md) [linq2db]() |
+| [NurseHeal](./src/NurseHeal/README.md) | 护士治疗 |  |
 | [OnlineGiftPackage](./src/OnlineGiftPackage/README.md) | 在线礼包 |  |
 | [PacketsStop](./src/PacketsStop/README.md) | 数据包拦截 |  |
 | [PermaBuff](./src/PermaBuff/README.md) | 永久 Buff |  |
@@ -185,11 +191,13 @@
 | [SmartRegions](./src/SmartRegions/README.md) | 智能区域 |  |
 | [SpawnInfra](./src/SpawnInfra/README.md) | 生成基础建设 |  |
 | [SpclPerm](./src/SpclPerm/README.md) | 服主特权 |  |
+| [Starfall](./src/Starfall/README.md) | 服务端控制坠落之星生成速率、掉落与天气事件倍率 |  |
 | [StatusTextManager](./src/StatusTextManager/README.md) | PC端模板文本管理插件 |  |
 | [SurfaceBlock](./src/SurfaceBlock/README.md) | 禁地表弹幕插件 | [LazyAPI](./src/LazyAPI/README.md) |
 | [SurvivalCrisis](./src/SurvivalCrisis/README.md) | 类among us小游戏 |  |
 | [SwitchCommands](./src/SwitchCommands/README.md) | 区域执行指令 |  |
 | [TeleportRequest](./src/TeleportRequest/README.md) | 传送请求 |  |
+| [TerraNews](./src/TerraNews/README.md) | 每日渔夫任务、月相、沙尘暴与旅商播报 |  |
 | [TimeRate](./src/TimeRate/README.md) | 时间加速插件 |  |
 | [TimerKeeper](./src/TimerKeeper/README.md) | 保存计时器状态 |  |
 | [TownNPCHomes](./src/TownNPCHomes/README.md) | NPC 快速回家 |  |

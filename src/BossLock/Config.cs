@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using TShockAPI;
 namespace BossLock;
 
@@ -7,6 +7,8 @@ public class Config
     private static string ConfigPath= Path.Combine(TShock.SavePath, "BossLock.json");
 
     internal static Config Settings = new ();
+
+    public string[] AutoResetTimes = ["09:00", "21:00"];
     
     public Lock[] Locks =
     [
@@ -39,7 +41,14 @@ public class Config
         {
             using FileStream fileStream = new (ConfigPath, FileMode.Open, FileAccess.Read, FileShare.Read);
             using StreamReader streamReader = new (fileStream);
-            result = JsonConvert.DeserializeObject<Config>(streamReader.ReadToEnd(), JsonSettings)!;
+            result = JsonConvert.DeserializeObject<Config>(streamReader.ReadToEnd(), JsonSettings)
+                ?? throw new JsonSerializationException("BossLock config must be an object.");
+        }
+
+        if (result.Locks == null || result.Locks.Any(entry => entry == null ||
+                entry.NpcId < 0 || entry.NpcId >= Terraria.ID.NPCID.Count || entry.LockSeconds < -1))
+        {
+            throw new JsonSerializationException("Invalid BossLock Locks configuration.");
         }
 
         Settings = result;
