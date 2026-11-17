@@ -1,0 +1,8 @@
+{
+  "README": {
+    "Description": "怪物数值调整：按 BOSS/精英/小怪分组倍率调整血量/伤害/防御/金币，/mt 查看、/mtreload 热重载"
+  },
+  "README.en-US": {
+    "Description": "Monster Tuner: scale HP/damage/defense/coin by BOSS/elite/mob group multipliers; /mt to view, /mtreload to hot-reload."
+  }
+}

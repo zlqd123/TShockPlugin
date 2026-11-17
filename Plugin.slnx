@@ -12,6 +12,7 @@
   <Project Path="src/AutoAirItem/AutoAirItem.csproj" />
   <Project Path="src/AutoBroadcast/AutoBroadcast.csproj" />
   <Project Path="src/AutoClear/AutoClear.csproj" />
+  <Project Path="src/AutoEat/AutoEat.csproj" />
   <Project Path="src/AutoFish/AutoFish.csproj" />
   <Project Path="src/AutoPluginManager/AutoPluginManager.csproj" />
   <Project Path="src/AutoReset/AutoReset.csproj">
@@ -71,6 +72,7 @@
   <Project Path="src/Economics.WeaponPlus/Economics.WeaponPlus.csproj" />
   <Project Path="src/EndureBoost/EndureBoost.csproj" />
   <Project Path="src/EssentialsPlus/EssentialsPlus.csproj" />
+  <Project Path="src/ExplosionGuard/ExplosionGuard.csproj" />
   <Project Path="src/Ezperm/Ezperm.csproj" />
   <Project Path="src/FullHealthRespawn/FullHealthRespawn.csproj" />
   <Project Path="src/GenerateMap/GenerateMap.csproj" />
@@ -97,8 +99,10 @@
   <Project Path="src/MiniGamesAPI/MiniGamesAPI.csproj" />
   <Project Path="src/ModifyWeapons/ModifyWeapons.csproj" />
   <Project Path="src/MonsterRegen/MonsterRegen.csproj" />
+  <Project Path="src/MonsterTuner/MonsterTuner.csproj" />
   <Project Path="src/MusicPlayer/MusicPlayer.csproj" />
   <Project Path="src/Noagent/Noagent.csproj" />
+  <Project Path="src/NoNaturalInvasion/NoNaturalInvasion.csproj" />
   <Project Path="src/NormalDropsBags/NormalDropsBags.csproj" />
   <Project Path="src/NoteWall/NoteWall.csproj" />
   <Project Path="src/NurseHeal/NurseHeal.csproj" />

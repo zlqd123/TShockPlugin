@@ -1,0 +1,8 @@
+{
+  "README": {
+    "Description": "阻止自然入侵：只拦凌晨自然刷的哥布林/海盗入侵，手动召唤（旗帜/海盗地图）与 /invade 不受影响"
+  },
+  "README.en-US": {
+    "Description": "No Natural Invasion: blocks only dawn-natural Goblin/Pirate invasions; manual summons (banners, pirate map) and /invade stay unaffected."
+  }
+}
