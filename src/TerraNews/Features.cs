@@ -15,6 +15,8 @@ public enum Feature
     WindyDay,
     Eclipse,
     BloodMoon,
+    Dawn,
+    Dusk,
     FullMoonHerb,
     BloodMoonHerb,
     RainHerb,
@@ -44,6 +46,10 @@ public class FeatureSwitches
     public bool Eclipse { get; set; } = true;
     [JsonProperty("血月播报")]
     public bool BloodMoon { get; set; } = true;
+    [JsonProperty("天亮提醒")]
+    public bool Dawn { get; set; } = true;
+    [JsonProperty("天黑提醒")]
+    public bool Dusk { get; set; } = true;
     [JsonProperty("满月草药提醒")]
     public bool FullMoonHerb { get; set; } = true;
     [JsonProperty("血月草药提醒")]
@@ -71,6 +77,8 @@ public class FeatureSwitches
         [Feature.WindyDay] = "大风播报",
         [Feature.Eclipse] = "日食播报",
         [Feature.BloodMoon] = "血月播报",
+        [Feature.Dawn] = "天亮提醒",
+        [Feature.Dusk] = "天黑提醒",
         [Feature.FullMoonHerb] = "满月草药提醒",
         [Feature.BloodMoonHerb] = "血月草药提醒",
         [Feature.RainHerb] = "雨天草药提醒",
@@ -90,6 +98,8 @@ public class FeatureSwitches
         Feature.WindyDay => WindyDay,
         Feature.Eclipse => Eclipse,
         Feature.BloodMoon => BloodMoon,
+        Feature.Dawn => Dawn,
+        Feature.Dusk => Dusk,
         Feature.FullMoonHerb => FullMoonHerb,
         Feature.BloodMoonHerb => BloodMoonHerb,
         Feature.RainHerb => RainHerb,
@@ -112,6 +122,8 @@ public class FeatureSwitches
             case Feature.WindyDay: WindyDay = value; break;
             case Feature.Eclipse: Eclipse = value; break;
             case Feature.BloodMoon: BloodMoon = value; break;
+            case Feature.Dawn: Dawn = value; break;
+            case Feature.Dusk: Dusk = value; break;
             case Feature.FullMoonHerb: FullMoonHerb = value; break;
             case Feature.BloodMoonHerb: BloodMoonHerb = value; break;
             case Feature.RainHerb: RainHerb = value; break;
@@ -135,6 +147,8 @@ public class FeatureSwitches
         Feature.WindyDay => "大风播报",
         Feature.Eclipse => "日食播报",
         Feature.BloodMoon => "血月播报",
+        Feature.Dawn => "天亮提醒",
+        Feature.Dusk => "天黑提醒",
         Feature.FullMoonHerb => "满月草药提醒",
         Feature.BloodMoonHerb => "血月草药提醒",
         Feature.RainHerb => "雨天草药提醒",
