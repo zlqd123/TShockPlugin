@@ -1,0 +1,126 @@
+# AdaptiveBossHP —— TShock Boss 自适应血量插件
+
+Boss 的血量不再是固定值：**初始按百分比增幅（X），每次失败临时减免（Y），每次成功永久递减（Z）**。
+所有数值均为**百分比**配置，对任意难度（经典/专家/大师）与世界类型均按原版血量等比缩放。
+
+## 公式
+
+```
+最终血量 = 原版血量 × (1 + BonusPercent%) × (1 - SuccessReducePercent%)^成功次数 × (1 - FailReducePercent%)^连败次数
+结果不低于 原版血量 × MinPercent%（每组可单独设置，未设置则用 GlobalMinPercent）
+```
+
+示例（默认配置：X=+50%，Y=-10%/次失败，Z=-5%/次成功，下限 30%）：
+
+| 场景 | 计算 | 血量 |
+|---|---|---|
+| 首次挑战 | 1.5 × 1 × 1 | 原版的 150% |
+| 失败 1 次后再战 | 1.5 × 1 × 0.9 | 原版的 135% |
+| 连败 3 次后再战 | 1.5 × 0.9³ | 原版的 109.35% |
+| 之后的每次成功 | ×0.95 永久累积 | 逐渐逼近 30% 下限 |
+| 连败后只要成功一次 | 失败减免清零，恢复全额 | 只保留永久部分 |
+
+- **Y 是临时的**：连败减免只在"上次成功之后"累计，一旦击败立即清零恢复。
+- **Z 是永久的**：成功次数永远累计，Boss 越打越弱（乘法衰减，越减越慢）。
+- 防守机制：无论怎么配置，血量不会低于 `MinPercent%`，不会无限削弱。
+
+## 判定规则
+
+| 事件 | 判定 | 时机 |
+|---|---|---|
+| **成功** | 本场战斗中该 Boss 的所有关键部位（`KillTargets`）全部被击杀 | 击杀瞬间记录，全组 NPC 消失后结算 |
+| **失败** | 有本组 NPC 在**未被击杀**的情况下消失（逃逸/团灭/天亮逃跑） | GameUpdate 轮询（约每 1/6 秒） |
+
+边界情况处理：
+
+- **多段 Boss**：毁灭者/世界吞噬怪/血肉墙等所有部位按同一比例缩放；只有关键部位（毁灭者头部、月总核心等）死亡才算成功。
+- **双子魔眼**：两尊都被击杀才算成功，只杀一只后团灭 = 失败。
+- **世界吞噬怪分裂**：分裂出的新头也会被自动纳入追踪并等比缩放，需全部击杀。
+- **无人在线保护**：Boss 消失时若服务器无人（停服、最后一名玩家退出），不计成败，静默清理。
+- **NPC 槽位复用**：已在生成与击杀两个事件里做了槽位防串处理。
+- **同一 Boss 多次召唤**：同时存在的同组 Boss 共享一场会话，需全部击杀才算成功。
+
+## 安装
+
+1. 需要 **TShock 6.x（Terraria 1.4.5+）**，插件基于 `.NET 9 / TSAPI 2.1` 构建。
+2. 将 `bin/Release/AdaptiveBossHP.dll` 复制到服务器的 `ServerPlugins/` 目录。
+3. 启动服务器，自动生成默认配置。
+
+> 旧版 TShock 5.2（Terraria 1.4.4，.NET 6）需将 `AdaptiveBossHP.csproj` 中 `TargetFramework` 改为 `net6.0` 后重新编译。
+
+## 配置文件
+
+首次运行生成 `tshock/AdaptiveBossHP.json`：
+
+```jsonc
+{
+  "Enabled": true,                    // 总开关
+  "BroadcastMessages": true,          // 广播现身/成功/失败消息
+  "GlobalMinPercent": 30,             // 全局下限：最终血量不低于原版的 30%
+  "Groups": {
+    "EyeOfCthulhu": {
+      "DisplayName": "克苏鲁之眼",
+      "NPCIDs": [4],                  // 本组全部 NPC（含部位/随从），都会被缩放
+      "KillTargets": [4],             // 死亡才算"击败"的关键部位
+      "BonusPercent": 50,             // X：初始增幅
+      "FailReducePercent": 10,        // Y：每次失败的临时减免
+      "SuccessReducePercent": 5,      // Z：每次成功的永久递减
+      "MinPercent": null              // 单组下限，null=用全局值
+    }
+    // … 其余默认组见下方列表
+  }
+}
+```
+
+新增/自定义组：在 `Groups` 里加一段即可，NPC ID 对照 [Terraria Wiki: NPC IDs](https://terraria.wiki.gg/wiki/NPC_IDs)。
+月度四柱（太阳/星旋/星云/星尘之柱）默认未收录，需要可自行添加。
+
+## 状态文件
+
+`tshock/AdaptiveBossHP_State.json`（自动生成）：
+
+```jsonc
+{
+  "Groups": {
+    "EyeOfCthulhu": {
+      "SuccessCount": 2,   // 累计成功 —— 驱动永久递减 Z
+      "FailStreak": 1,     // 当前连败（成功清零）—— 驱动临时减免 Y
+      "TotalFails": 3      // 历史失败总数（仅统计）
+    }
+  }
+}
+```
+
+变更即写盘，重启不丢。想手动清零直接删除文件或用指令。
+
+## 指令（权限：`adaptivebosshp.admin`）
+
+| 指令 | 说明 |
+|---|---|
+| `/bossdiff status` | 查看各 Boss 成功次数/连败次数/下次血量（含原版血量换算） |
+| `/bossdiff reset <组名\|all>` | 重置统计（组名可用 `status` 里的方括号名或中文显示名） |
+| `/bossdiff reload` | 重载配置（也支持 TShock 的 `/reload`） |
+
+别名：`/bdhp`
+
+## 默认 Boss 组
+
+史莱姆王、克苏鲁之眼、世界吞噬怪、克苏鲁之脑、蜂王、骷髅王、独眼巨鹿、血肉墙、史莱姆皇后、
+双子魔眼、毁灭者、机械骷髅王、世纪之花、石巨人、猪龙鱼公爵、光之女皇、双足翼龙、飞翔海盗船、
+火星飞碟、拜月教邪教徒、月亮领主、哀木、南瓜王、常绿尖叫怪、圣诞坦克、冰雪女王。
+
+## 构建
+
+```bash
+cd AdaptiveBossHP
+dotnet build -c Release
+# 产物：bin/Release/AdaptiveBossHP.dll
+```
+
+依赖：.NET 9 SDK；NuGet 自动还原 `TShock 6.2.1`（含 TSAPI）。
+
+## 已知限制
+
+- 同组 Boss 的多个召唤物共享一场会话：同时召两只克眼需全杀才算成功。
+- Boss 被管理指令（如 `/butcher`）杀死同样计为"成功"。
+- 四柱默认不收录（它们没有"逃逸失败"的概念）。

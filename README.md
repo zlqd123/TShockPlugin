@@ -57,6 +57,7 @@
 
 | 名称 | 插件说明 | 依赖 |
 | :-: | :-: | :-: |
+| [AdaptiveBossHP](./src/AdaptiveBossHP/README.md) | Boss自适应血量：初始按百分比增幅，每失败一次临时减免，每成功一次永久递减 |  |
 | [AdditionalPylons](./src/AdditionalPylons/README.md) | 放置更多晶塔 | [LazyAPI](./src/LazyAPI/README.md) |
 | [AIChatPlugin](./src/AIChatPlugin/README.md) | AI聊天插件 |  |
 | [AnnouncementBoxPlus](./src/AnnouncementBoxPlus/README.md) | 广播盒功能强化 | [LazyAPI](./src/LazyAPI/README.md) |

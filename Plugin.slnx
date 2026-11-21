@@ -6,6 +6,7 @@
   <Folder Name="/Files/">
     <File Path="template.targets" />
   </Folder>
+  <Project Path="src/AdaptiveBossHP/AdaptiveBossHP.csproj" />
   <Project Path="src/AdditionalPylons/AdditionalPylons.csproj" />
   <Project Path="src/AIChatPlugin/AIChatPlugin.csproj" />
   <Project Path="src/AnnouncementBoxPlus/AnnouncementBoxPlus.csproj" />
