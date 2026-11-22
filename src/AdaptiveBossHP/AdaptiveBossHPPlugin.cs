@@ -35,7 +35,6 @@ namespace AdaptiveBossHP
 
         public static readonly string ConfigPath = Path.Combine("tshock", "AdaptiveBossHP.json");
         public static readonly string StatePath = Path.Combine("tshock", "AdaptiveBossHP_State.json");
-        private const string Permission = "adaptivebosshp.admin";
 
         private PluginConfig _config = new PluginConfig();
         private PluginState _state = new PluginState();
@@ -69,7 +68,7 @@ namespace AdaptiveBossHP
 
             Commands.ChatCommands.Add(new Command(OnBossDiffCommand, "bossdiff", "bdhp")
             {
-                HelpText = "自适应Boss血量：/bossdiff status（所有人）；reset / reload 需 adaptivebosshp.admin 权限"
+                HelpText = "自适应Boss血量：/bossdiff status（所有人）；reset / reload 需管理员用户组"
             });
 
             TShock.Log.ConsoleInfo($"[AdaptiveBossHP] 已加载，共 {_config.Groups.Count} 个Boss组（启用={_config.Enabled}）");
@@ -303,20 +302,27 @@ namespace AdaptiveBossHP
             }
         }
 
-        /// <summary>管理操作（reset/reload）权限门槛。</summary>
+        /// <summary>管理操作（reset/reload）用户组门槛：名单见配置"管理指令允许的用户组"，控制台始终放行。</summary>
         private bool RequireAdmin(CommandArgs args)
         {
-            if (args.Player.HasPermission(Permission))
+            if (args.Player == TShock.Server)
                 return true;
-            args.Player.SendErrorMessage($"[AdaptiveBossHP] 权限不足：该操作需要 {Permission} 权限");
+
+            var allowed = _config.AdminGroups ?? new List<string>();
+            if (allowed.Contains(args.Player.Group?.Name ?? "", StringComparer.OrdinalIgnoreCase))
+                return true;
+
+            args.Player.SendErrorMessage(
+                $"[AdaptiveBossHP] 权限不足：该操作需要管理员用户组（当前：{args.Player.Group?.Name ?? "未知"}，" +
+                $"允许：{string.Join("、", allowed)}）");
             return false;
         }
 
         private void PrintHelp(CommandArgs args)
         {
             args.Player.SendInfoMessage("/bossdiff status —— 查看各 Boss 的成功次数/连败次数与下次血量（所有人可用）");
-            args.Player.SendInfoMessage("/bossdiff reset <组名|all> —— 重置统计（成功与连败清零，需管理员权限）");
-            args.Player.SendInfoMessage("/bossdiff reload —— 重载配置文件（需管理员权限）");
+            args.Player.SendInfoMessage("/bossdiff reset <组名|all> —— 重置统计（成功与连败清零，需管理员用户组）");
+            args.Player.SendInfoMessage("/bossdiff reload —— 重载配置文件（需管理员用户组）");
         }
 
         private void CmdStatus(CommandArgs args)

@@ -78,6 +78,7 @@ Boss 的血量阶段（如世纪之花 50% 转阶段）不受影响——插件�
   "是否启用": true,
   "是否广播消息": true,
   "全局血量下限百分比": 50,
+  "管理指令允许的用户组": ["admin", "superadmin"],
   "Boss组": {
     "KingSlime": {
       "显示名": "史莱姆王",
@@ -122,10 +123,10 @@ Boss 的血量阶段（如世纪之花 50% 转阶段）不受影响——插件�
 | 指令 | 说明 | 权限 |
 |---|---|---|
 | `/bossdiff status` | 查看各 Boss 成功次数/连败次数/下次血量（含原版血量换算） | 所有人可用 |
-| `/bossdiff reset <组名\|all>` | 重置统计（组名可用 `status` 里的方括号名或中文显示名） | `adaptivebosshp.admin` |
-| `/bossdiff reload` | 重载配置（也支持 TShock 的 `/reload`） | `adaptivebosshp.admin` |
+| `/bossdiff reset <组名\|all>` | 重置统计（组名可用 `status` 里的方括号名或中文显示名） | 管理员用户组 |
+| `/bossdiff reload` | 重载配置（也支持 TShock 的 `/reload`） | 管理员用户组 |
 
-别名：`/bdhp`。`adaptivebosshp.admin` 默认仅授予管理员组（含 `*` 通配权限的组自动拥有）；控制台不受限制。
+别名：`/bdhp`。管理指令按**用户组**判断，名单由全局配置 `"管理指令允许的用户组"` 控制（默认 `admin`、`superadmin`，可添加自定义组名）；控制台始终放行。
 
 ## 默认 Boss 组
 

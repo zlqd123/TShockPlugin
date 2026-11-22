@@ -125,6 +125,10 @@ namespace AdaptiveBossHP
         [JsonProperty("全局血量下限百分比")]
         public double GlobalMinPercent { get; set; } = 50;
 
+        /// <summary>允许使用管理指令（reset/reload）的用户组名单。</summary>
+        [JsonProperty("管理指令允许的用户组")]
+        public List<string> AdminGroups { get; set; } = new List<string> { "admin", "superadmin" };
+
         /// <summary>Boss 组配置，键为组名（指令 reset 用）。</summary>
         [JsonProperty("Boss组")]
         public Dictionary<string, BossGroupConfig> Groups { get; set; } = BuildDefaultGroups();
