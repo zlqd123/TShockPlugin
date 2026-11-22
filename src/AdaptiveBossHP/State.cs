@@ -9,18 +9,22 @@ namespace AdaptiveBossHP
     /// <summary>单个 Boss 组的动态状态（持久化到磁盘，重启不丢）。</summary>
     public class BossGroupState
     {
-        /// <summary>累计成功（击败）次数 —— 驱动永久递减 Z。</summary>
+        /// <summary>累计成功（击败）次数 —— 驱动成功永久衰减。</summary>
+        [JsonProperty("成功次数")]
         public int SuccessCount { get; set; }
 
-        /// <summary>当前连败次数（自上次成功以来）—— 驱动临时减免 Y，成功时清零。</summary>
+        /// <summary>当前连败次数（自上次成功以来）—— 驱动失败临时减免，成功时清零。</summary>
+        [JsonProperty("当前连败次数")]
         public int FailStreak { get; set; }
 
         /// <summary>历史失败总次数（仅统计用）。</summary>
+        [JsonProperty("累计失败次数")]
         public int TotalFails { get; set; }
     }
 
     public class PluginState
     {
+        [JsonProperty("Boss组")]
         public Dictionary<string, BossGroupState> Groups { get; set; } =
             new Dictionary<string, BossGroupState>(StringComparer.OrdinalIgnoreCase);
 

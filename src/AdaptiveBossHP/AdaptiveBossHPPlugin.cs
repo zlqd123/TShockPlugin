@@ -31,7 +31,7 @@ namespace AdaptiveBossHP
         public override string Author => "zlqd123";
         public override string Description =>
             "Boss 自适应血量：初始按百分比增幅，失败临时减免，成功永久递减";
-        public override Version Version => new Version(1, 2, 0);
+        public override Version Version => new Version(1, 0, 1);
 
         public static readonly string ConfigPath = Path.Combine("tshock", "AdaptiveBossHP.json");
         public static readonly string StatePath = Path.Combine("tshock", "AdaptiveBossHP_State.json");
