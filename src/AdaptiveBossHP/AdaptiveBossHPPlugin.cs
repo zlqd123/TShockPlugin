@@ -67,9 +67,9 @@ namespace AdaptiveBossHP
             ServerApi.Hooks.GameUpdate.Register(this, OnGameUpdate);
             GeneralHooks.ReloadEvent += OnReload;
 
-            Commands.ChatCommands.Add(new Command(Permission, OnBossDiffCommand, "bossdiff", "bdhp")
+            Commands.ChatCommands.Add(new Command(OnBossDiffCommand, "bossdiff", "bdhp")
             {
-                HelpText = "自适应Boss血量：/bossdiff status | /bossdiff reset <组名|all> | /bossdiff reload"
+                HelpText = "自适应Boss血量：/bossdiff status（所有人）；reset / reload 需 adaptivebosshp.admin 权限"
             });
 
             TShock.Log.ConsoleInfo($"[AdaptiveBossHP] 已加载，共 {_config.Groups.Count} 个Boss组（启用={_config.Enabled}）");
@@ -282,15 +282,20 @@ namespace AdaptiveBossHP
             switch (args.Parameters[0].ToLowerInvariant())
             {
                 case "status":
+                    // 查询不设权限，所有人可用
                     CmdStatus(args);
                     break;
                 case "reset":
-                    CmdReset(args);
+                    if (RequireAdmin(args))
+                        CmdReset(args);
                     break;
                 case "reload":
-                    _config = PluginConfig.Load(ConfigPath);
-                    RebuildTypeMap();
-                    args.Player.SendSuccessMessage("[AdaptiveBossHP] 配置已重载");
+                    if (RequireAdmin(args))
+                    {
+                        _config = PluginConfig.Load(ConfigPath);
+                        RebuildTypeMap();
+                        args.Player.SendSuccessMessage("[AdaptiveBossHP] 配置已重载");
+                    }
                     break;
                 default:
                     PrintHelp(args);
@@ -298,11 +303,20 @@ namespace AdaptiveBossHP
             }
         }
 
+        /// <summary>管理操作（reset/reload）权限门槛。</summary>
+        private bool RequireAdmin(CommandArgs args)
+        {
+            if (args.Player.HasPermission(Permission))
+                return true;
+            args.Player.SendErrorMessage($"[AdaptiveBossHP] 权限不足：该操作需要 {Permission} 权限");
+            return false;
+        }
+
         private void PrintHelp(CommandArgs args)
         {
-            args.Player.SendInfoMessage("/bossdiff status —— 查看各 Boss 的成功次数/连败次数与下次血量");
-            args.Player.SendInfoMessage("/bossdiff reset <组名|all> —— 重置统计（成功与连败清零）");
-            args.Player.SendInfoMessage("/bossdiff reload —— 重载配置文件");
+            args.Player.SendInfoMessage("/bossdiff status —— 查看各 Boss 的成功次数/连败次数与下次血量（所有人可用）");
+            args.Player.SendInfoMessage("/bossdiff reset <组名|all> —— 重置统计（成功与连败清零，需管理员权限）");
+            args.Player.SendInfoMessage("/bossdiff reload —— 重载配置文件（需管理员权限）");
         }
 
         private void CmdStatus(CommandArgs args)

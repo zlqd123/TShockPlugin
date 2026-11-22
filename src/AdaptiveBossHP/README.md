@@ -117,15 +117,15 @@ Boss 的血量阶段（如世纪之花 50% 转阶段）不受影响——插件�
 
 变更即写盘，重启不丢。想手动清零直接删除文件或用指令。
 
-## 指令（权限：`adaptivebosshp.admin`）
+## 指令
 
-| 指令 | 说明 |
-|---|---|
-| `/bossdiff status` | 查看各 Boss 成功次数/连败次数/下次血量（含原版血量换算） |
-| `/bossdiff reset <组名\|all>` | 重置统计（组名可用 `status` 里的方括号名或中文显示名） |
-| `/bossdiff reload` | 重载配置（也支持 TShock 的 `/reload`） |
+| 指令 | 说明 | 权限 |
+|---|---|---|
+| `/bossdiff status` | 查看各 Boss 成功次数/连败次数/下次血量（含原版血量换算） | 所有人可用 |
+| `/bossdiff reset <组名\|all>` | 重置统计（组名可用 `status` 里的方括号名或中文显示名） | `adaptivebosshp.admin` |
+| `/bossdiff reload` | 重载配置（也支持 TShock 的 `/reload`） | `adaptivebosshp.admin` |
 
-别名：`/bdhp`
+别名：`/bdhp`。`adaptivebosshp.admin` 默认仅授予管理员组（含 `*` 通配权限的组自动拥有）；控制台不受限制。
 
 ## 默认 Boss 组
 
