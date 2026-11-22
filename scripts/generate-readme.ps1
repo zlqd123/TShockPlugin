@@ -14,7 +14,9 @@ foreach ($p in @(Get-ChildItem ./src/**/*.csproj)) {
     Copy-Item $manifestPath "./publish/manifests/$($p.Basename).json"
   }
 }
-Copy-Item ./.config/submodule-manifests/* ./publish/manifests
+if (Test-Path ./.config/submodule-manifests) {
+  Copy-Item ./.config/submodule-manifests/* ./publish/manifests
+}
 
 $asm_to_dir = @{}
 foreach ($p in @(Get-ChildItem ./src/**/*.csproj)) {

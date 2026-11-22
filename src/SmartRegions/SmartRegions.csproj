@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-        <LangVersion>11.0</LangVersion>
-		<Nullable>disable</Nullable>
-	</PropertyGroup>
-
-	<Import Project="..\..\template.targets" />
-</Project>

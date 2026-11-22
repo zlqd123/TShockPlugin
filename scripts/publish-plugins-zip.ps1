@@ -103,7 +103,9 @@ foreach ($p in @(Get-ChildItem ../src/**/*.csproj)) {
         Copy-Item $manifestPath $(Join-Path manifests "$($p.Basename).json")
     }
 }
-Copy-Item ../.config/submodule-manifests/* ./manifests
+if (Test-Path ../.config/submodule-manifests) {
+    Copy-Item ../.config/submodule-manifests/* ./manifests
+}
 
 # Start generating plugin list
 $proc = Start-Process -NoNewWindow -PassThru './TShock.Server' -ArgumentList '-dump-plugins-list-only','./manifests'

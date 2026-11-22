@@ -64,162 +64,20 @@
 
 | Nombre del plugin | Porcentaje de traducción | Descripcion del Plugin  | Dependencias |
 | :-: | :-: | :-: | :-: |
-| [AdditionalPylons](./src/AdditionalPylons/README.md) | 90.0% | Colocar más pilones | [LazyAPI](./src/LazyAPI/README.md) |
-| [AIChatPlugin](./src/AIChatPlugin/README.md) | 0.0% | AI聊天插件 |  |
-| [AnnouncementBoxPlus](./src/AnnouncementBoxPlus/README.md) | 0.0% | Mejora la funcionalidad de la caja de anuncios | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoAirItem](./src/AutoAirItem/README.md) | 0.0% | Botes de basura automáticos | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoBroadcast](./src/AutoBroadcast/README.md) | 0.0% | Transmisión automática | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoClear](./src/AutoClear/README.md) | 0.0% | Limpieza automática inteligente | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoFish](./src/AutoFish/README.md) | 0.0% | 自动钓鱼重置版 | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoPluginManager](./src/AutoPluginManager/README.es-ES.md) | 55.4% | Actualice los complementos automáticamente con una sola tecla |  |
-| [AutoReset](./src/AutoReset/README.md) | 0.0% | Reinicio completamente automático | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoStoreItems](./src/AutoStoreItems/README.md) | 0.0% | Almacenamiento automático | [LazyAPI](./src/LazyAPI/README.md) |
-| [AutoTeam](./src/AutoTeam/README.md) | 0.0% | Formación automática de equipos | [LazyAPI](./src/LazyAPI/README.md) |
-| [Back](./src/Back/README.md) | 0.0% | Regresar al punto de muerte | [LazyAPI](./src/LazyAPI/README.md) |
-| [BadApplePlayer](./src/BadApplePlayer/README.md) | 0.0% | Reproductor BadApple |  |
-| [BanNpc](./src/BanNpc/README.md) | 0.0% | Previene la generación de monstruos | [LazyAPI](./src/LazyAPI/README.md) |
-| [BedSet](./src/BedSet/README.md) | 0.0% | Establecer y registrar puntos de resurrección | [LazyAPI](./src/LazyAPI/README.md) |
-| [BetterWhitelist](./src/BetterWhitelist/README.md) | 0.0% | Plugin de lista blanca | [LazyAPI](./src/LazyAPI/README.md) |
-| [BossLock](./src/BossLock/README.md) | 0.0% | 进度锁插件 |  |
-| [BottleRefund](./src/BottleRefund/README.md) | 0.0% | 喝药自动返还玻璃瓶：延迟数秒全面结算背包流水后发放，合并堆叠/入箱/丢弃等批量操作不会误发，生长无需任何指令 |  |
-| [BridgeBuilder](./src/BridgeBuilder/README.md) | 0.0% | Construcción rápida de puentes | [LazyAPI](./src/LazyAPI/README.md) |
-| [BuildMaster](./src/BuildMaster/README.md) | 0.0% | Modo Maestro Constructor para el Mini Juego Red Bean | [MiniGamesAPI](./src/MiniGamesAPI/README.md) |
-| [CaiBotLite](./src/CaiBotLite/README.md) | 0.0% | Plugin adaptador CaiBotLite (Only support QQ) | [linq2db]() [GenerateMap](./src/GenerateMap/README.md) |
-| [CaiCustomEmojiCommand](./src/CaiCustomEmojiCommand/README.md) | 0.0% | Comando de emoji personalizado | [LazyAPI](./src/LazyAPI/README.md) |
-| [CaiPacketDebug](./src/CaiPacketDebug/README.md) | 0.0% | Herramienta de depuración de paquetes Cai |  |
-| [CaiRewardChest](./src/CaiRewardChest/README.md) | 0.0% | Convierte cofres generados naturalmente en cofres de recompensa que todos pueden reclamar una vez | [linq2db]() [LazyAPI](./src/LazyAPI/README.md) |
-| [CGive](./src/CGive/README.md) | 0.0% | Comandos fuera de línea |  |
-| [Challenger](./src/Challenger/README.md) | 100.0% | Modo Challenger |  |
-| [Chameleon](./src/Chameleon/README.md) | 0.0% | Inicia sesión antes de entrar al servidor | [LazyAPI](./src/LazyAPI/README.md) |
-| [ChattyBridge](./src/ChattyBridge/README.md) | 0.0% | Usado para el chat entre servidores | [LazyAPI](./src/LazyAPI/README.md) |
-| [ChestRestore](./src/ChestRestore/README.md) | 0.0% | Objetos infinitos en servidores de recursos |  |
-| [Chireiden.TShock.Omni](https://github.com/sgkoishi/yaaiomni/blob/master/README.md) | 0.0% | Otro plugin misceláneo para TShock - la parte central |  |
-| [Chireiden.TShock.Omni.Misc](https://github.com/sgkoishi/yaaiomni/blob/master/README.md) | 0.0% | Otro plugin misceláneo para TShock - la parte miscelánea |  |
-| [CNPCShop](./src/CNPCShop/README.md) | 0.0% | Tienda personalizada de NPC |  |
-| [ConsoleSql](./src/ConsoleSql/README.md) | 0.0% | Ejecutar sentencias SQL en la consola |  |
-| [ConvertWorld](./src/ConvertWorld/README.md) | 0.0% | Convertir objetos del mundo al derrotar monstruos |  |
-| [CreateSpawn](./src/CreateSpawn/README.md) | 0.0% | Generación de puntos de aparición | [LazyAPI](./src/LazyAPI/README.md) |
-| [CriticalHit](./src/CriticalHit/README.md) | 0.0% | Indicación de golpe crítico |  |
-| [Crossplay](https://github.com/UnrealMultiple/Crossplay/blob/main/README.md) | 0.0% | Permite el juego multiplataforma |  |
-| [DailyMerchant](./src/DailyMerchant/README.md) | 0.0% | El mercader viajero y el mercader esqueleto aparecen todos los días, cada uno con su propio interruptor |  |
-| [DamageRuleLoot](./src/DamageRuleLoot/README.md) | 0.0% | Determinar la bolsa de tesoro caída basada en la relación de daño y transferir el cálculo de daño |  |
-| [DamageStatistic](./src/DamageStatistic/README.md) | 50.0% | Mostrar el daño causado por cada jugador después de cada pelea de jefe |  |
-| [DataSync](./src/DataSync/README.md) | 0.0% | Sincronización de progreso |  |
-| [DeathDrop](./src/DeathDrop/README.md) | 100.0% | Botín aleatorio y personalizado al morir un monstruo |  |
-| [DeltaForce.Core](./src/DeltaForce.Core/README.md) | 0.0% | 三角洲行动玩法插件的特勤处 | [LazyAPI](./src/LazyAPI/README.md) [DeltaForce.Protocol](./src/DeltaForce.Protocol/README.md) [linq2db]() |
-| [DeltaForce.Game](./src/DeltaForce.Game/README.md) | 0.0% | 三角洲行动玩法游戏插件 | [DeltaForce.Protocol](./src/DeltaForce.Protocol/README.md) [LazyAPI](./src/LazyAPI/README.md) |
-| [DeltaForce.Protocol](./src/DeltaForce.Protocol/README.md) | 0.0% | 三角洲行动的通信协议库 |  |
-| [DisableMonsLoot](./src/DisableMonsLoot/README.md) | 11.1% | Prohibir el botín de monstruos |  |
-| [DonotFuck](./src/DonotFuck/README.md) | 15.0% | Prevenir groserías | [LazyAPI](./src/LazyAPI/README.md) |
-| [DTEntryBlock](./src/DTEntryBlock/README.md) | 0.0% | Prevenir la entrada a mazmorras o templos |  |
-| [Dummy](./src/Dummy/README.md) | 0.0% | Servidor de Pruebas (Ficticio) Para TEST |  |
-| [DumpTerrariaID](./src/DumpTerrariaID/README.md) | 0.0% | Volcar las ID de Terraria |  |
-| [DwTP](./src/DwTP/README.md) | 0.0% | Teletransportación por posicionamiento |  |
-| [Economics.Core](./src/Economics.Core/README.md) | 0.0% | Plugin económico |  |
-| [Economics.Deal](./src/Economics.Deal/README.md) | 0.0% | Plugin de comercio | [Economics.Core](./src/Economics.Core/README.md) |
-| [Economics.NPC](./src/Economics.NPC/README.md) | 0.0% | Recompensas personalizadas de monstruos | [Economics.Core](./src/Economics.Core/README.md) [Economics.Script]() |
-| [Economics.Plugin](./src/Economics.Plugin/README.md) | 0.0% | 用于JavaScript开发的插件 | [Economics.Script]() |
-| [Economics.Projectile](./src/Economics.Projectile/README.md) | 0.0% | Proyectiles personalizados | [Economics.Core](./src/Economics.Core/README.md) [Economics.RPG](./src/Economics.RPG/README.md) |
-| [Economics.Regain](./src/Economics.Regain/README.md) | 0.0% | Reciclaje de objetos | [Economics.Core](./src/Economics.Core/README.md) |
-| [Economics.RPG](./src/Economics.RPG/README.md) | 0.0% | Plugin RPG | [Economics.Core](./src/Economics.Core/README.md) |
-| [Economics.Shop](./src/Economics.Shop/README.md) | 0.0% | Plugin de tienda | [Economics.Core](./src/Economics.Core/README.md) [Economics.RPG](./src/Economics.RPG/README.md) |
-| [Economics.Skill](./src/Economics.Skill/README.md) | 0.0% | Plugin de habilidades | [Economics.Core](./src/Economics.Core/README.md) [Economics.RPG](./src/Economics.RPG/README.md) |
-| [Economics.Task](./src/Economics.Task/README.md) | 0.0% | Plugin de tareas | [Economics.Core](./src/Economics.Core/README.md) [Economics.RPG](./src/Economics.RPG/README.md) |
-| [Economics.WeaponPlus](./src/Economics.WeaponPlus/README.md) | 0.0% | Mejora de armas | [Economics.Core](./src/Economics.Core/README.md) |
-| [EndureBoost](./src/EndureBoost/README.md) | 0.0% | Otorga un buff específico cuando el jugador tiene una cantidad determinada de objetos |  |
-| [EssentialsPlus](./src/EssentialsPlus/README.es-ES.md) | 94.2% | Comandos de gestión adicionales | [LazyAPI](./src/LazyAPI/README.md) |
-| [Ezperm](./src/Ezperm/README.md) | 0.0% | Cambio por lotes de permisos |  |
-| [FishShop](https://github.com/UnrealMultiple/TShockFishShop/blob/master/README.md) | 0.0% | Tienda de peces |  |
-| [FullHealthRespawn](./src/FullHealthRespawn/README.md) | 0.0% | Restaurar salud completa al reaparecer |  |
-| [GenerateMap](./src/GenerateMap/README.md) | 0.0% | Generar mapas |  |
-| [GhostView](./src/GhostView/README.md) | 0.0% | espectar en modo fantasma tras la muerte, la reconexión no reinicia el tiempo de reaparición |  |
-| [GolfRewards](./src/GolfRewards/README.md) | 0.0% | Recompensas de golf |  |
-| [GoodNight](./src/GoodNight/README.md) | 0.0% | Toque de queda |  |
-| [GroundCraft](./src/GroundCraft/README.md) | 0.0% | 把掉落物丢在一起自动合成，支持 JSON 配方、条件、精确匹配和螺旋动画 |  |
-| [HardPlayerDrop](./src/HardPlayerDrop/README.md) | 0.0% | Los jugadores en modo Hardcore sueltan corazones de vida al morir |  |
-| [HelpPlus](./src/HelpPlus/README.md) | 0.0% | Corrige y mejora el comando de ayuda |  |
-| [HerbBloom](./src/HerbBloom/README.md) | 0.0% | 全草药常开：成熟即开花、无视昼夜/天气/月相条件，开花后永不回退；生长速度默认保持原版（可配置加速） |  |
-| [History](./src/History/README.md) | 0.0% | Registra un historial en formato de tabla |  |
-| [HouseRegion](./src/HouseRegion/README.md) | 0.0% | Plugin de reclamación de tierras | [LazyAPI](./src/LazyAPI/README.md) |
-| [Invincibility](./src/Invincibility/README.md) | 0.0% | Invencibilidad limitada en el tiempo |  |
-| [ItemBox](./src/ItemBox/README.md) | 0.0% | Inventario fuera de línea |  |
-| [ItemDecoration](./src/ItemDecoration/README.es-ES.md) | 100.0% | Muestra el spryte y texto de info y damage del item seleccionado | [LazyAPI](./src/LazyAPI/README.md) |
-| [ItemPreserver](./src/ItemPreserver/README.md) | 50.0% | Conserva ítems específicos de la consumición |  |
-| [JourneyUnlock](./src/JourneyUnlock/README.md) | 6.3% | Desbloquea ítems del modo Journey |  |
-| [Lagrange.XocMat.Adapter](./src/Lagrange.XocMat.Adapter/README.md) | 0.0% | Plugin adaptador para el bot Lagrange.XocMat | [SixLabors.ImageSharp]() |
-| [LazyAPI](./src/LazyAPI/README.md) | 0.0% | Biblioteca base para plugins | [linq2db]() |
-| [LifemaxExtra](./src/LifemaxExtra/README.md) | 0.0% | Comer más frutas/cristales de vida | [LazyAPI](./src/LazyAPI/README.md) |
-| [ListPlugins](./src/ListPlugins/README.md) | 16.7% | Lista los plugins instalados |  |
-| [MapTp](./src/MapTp/README.md) | 100.0% | Teletransportarse con doble clic en el mapa |  |
-| [MazeGenerator](./src/MazeGenerator/README.md) | 0.0% | Plugin Generador de Laberintos | [LazyAPI](./src/LazyAPI/README.md) |
-| [MiniGamesAPI](./src/MiniGamesAPI/README.md) | 0.0% | API para el mini-juego de pasta de frijol |  |
-| [ModifyWeapons](./src/ModifyWeapons/README.md) | 0.0% | Deje que los jugadores realicen dos Sprint | [LazyAPI](./src/LazyAPI/README.md) |
-| [MonsterRegen](./src/MonsterRegen/README.md) | 0.0% | Regeneración de progreso de monstruos |  |
-| [MusicPlayer](./src/MusicPlayer/README.md) | 0.0% | Reproductor de música simple |  |
-| [Noagent](./src/Noagent/README.md) | 0.0% | Prohíbe que las IPs de proxy ingresen al servidor |  |
-| [NormalDropsBags](./src/NormalDropsBags/README.md) | 0.0% | Suelta bolsas de tesoros en dificultad normal |  |
-| [NoteWall](./src/NoteWall/README.md) | 0.0% | Los jugadores pueden dejar y ver notas aquí. | [LazyAPI](./src/LazyAPI/README.md) [linq2db]() |
-| [NurseHeal](./src/NurseHeal/README.md) | 0.0% | 护士治疗 |  |
-| [OnlineGiftPackage](./src/OnlineGiftPackage/README.md) | 0.0% | Paquete de regalos en línea |  |
-| [PacketsStop](./src/PacketsStop/README.md) | 0.0% | Interceptación de paquetes |  |
-| [PermaBuff](./src/PermaBuff/README.md) | 0.0% | Buff permanente |  |
-| [PerPlayerLoot](./src/PerPlayerLoot/README.md) | 0.0% | Cofre separado para el botín del jugador |  |
-| [PersonalPermission](./src/PersonalPermission/README.md) | 0.0% | Establece permisos individualmente para los jugadores |  |
-| [Platform](./src/Platform/README.md) | 0.0% | Determina el dispositivo del jugador |  |
-| [PlayerManager](https://github.com/UnrealMultiple/TShockPlayerManager/blob/master/README.md) | 0.0% | Administrador de jugadores de Hufang |  |
-| [PlayerRandomSwapper](./src/PlayerRandomSwapper/README.md) | 0.0% | Intercambio de posiciones aleatorio de jugadores | [LazyAPI](./src/LazyAPI/README.md) |
-| [PlayerSpeed](./src/PlayerSpeed/README.md) | 0.0% | Interceptación de paquetes | [LazyAPI](./src/LazyAPI/README.md) |
-| [ProgressBag](./src/ProgressBag/README.md) | 0.0% | Paquete de progreso | [LazyAPI](./src/LazyAPI/README.md) |
-| [ProgressControls](./src/ProgressControls/README.md) | 0.0% | Planificador (Automatiza el control del servidor) |  |
-| [ProgressRestrict](./src/ProgressRestrict/README.md) | 0.0% | Detección de super progreso | [DataSync](./src/DataSync/README.md) |
-| [ProxyProtocolSocket](./src/ProxyProtocolSocket/README.md) | 0.0% | Acepta conexiones de protocolo proxy |  |
-| [PvPer](./src/PvPer/README.md) | 0.0% | Sistema de duelos |  |
-| [QRCoder](./src/QRCoder/README.md) | 0.0% | Generador de Códigos QR | [LazyAPI](./src/LazyAPI/README.md) |
-| [RainbowChat](./src/RainbowChat/README.md) | 0.0% | Colores aleatorios en el chat |  |
-| [RandomBroadcast](./src/RandomBroadcast/README.md) | 0.0% | Transmisión aleatoria |  |
-| [RandomFishingLoot](./src/RandomFishingLoot/README.md) | 0.0% | 按当前进度阶段替换钓到的物品 |  |
-| [RandRespawn](./src/RandRespawn/README.md) | 0.0% | Punto de aparición aleatorio |  |
-| [RealTime](./src/RealTime/README.md) | 0.0% | Sincroniza la hora del servidor con la hora real |  |
-| [RebirthCoin](./src/RebirthCoin/README.md) | 0.0% | Consume ítems designados para revivir al jugador |  |
-| [RecipesBrowser](./src/RecipesBrowser/README.md) | 0.0% | Mesa de trabajo |  |
-| [ReFishTask](./src/ReFishTask/README.md) | 0.0% | Refresca automáticamente las tareas del pescador |  |
-| [RegionView](./src/RegionView/README.md) | 0.0% | Muestra los límites de las áreas |  |
-| [Respawn](./src/Respawn/README.md) | 0.0% | Reaparece en el lugar de la muerte |  |
-| [RestInventory](./src/RestInventory/README.md) | 0.0% | Proporciona una interfaz de consulta REST para la mochila |  |
-| [ReverseWorld](./src/ReverseWorld/README.md) | 0.0% | Complemento de Inversión del Mundo y Colocación de Minas Terrestres |  |
-| [RolesModifying](./src/RolesModifying/README.md) | 0.0% | Modificar mochila del jugador |  |
-| [Sandstorm](./src/Sandstorm/README.md) | 0.0% | Alterna la tormenta de arena |  |
-| [ServerTools](./src/ServerTools/README.md) | 0.0% | Herramientas de administración del servidor | [LazyAPI](./src/LazyAPI/README.md) [linq2db]() |
-| [SessionSentinel](./src/SessionSentinel/README.md) | 0.0% | Maneja jugadores que no envían paquetes de datos por mucho tiempo |  |
-| [ShortCommand](./src/ShortCommand/README.md) | 0.0% | Comando corto |  |
-| [ShowArmors](./src/ShowArmors/README.md) | 0.0% | Muestra la barra de equipo |  |
-| [SignInSign](./src/SignInSign/README.md) | 0.0% | Plugin de inicio de sesión con cartel |  |
-| [SmartRegions](./src/SmartRegions/README.md) | 0.0% | Regiones inteligentes |  |
-| [SpawnInfra](./src/SpawnInfra/README.md) | 0.0% | Genera infraestructura básica |  |
-| [SpclPerm](./src/SpclPerm/README.md) | 0.0% | Privilegios del propietario del servidor |  |
-| [Starfall](./src/Starfall/README.md) | 0.0% | 服务端控制坠落之星生成速率、掉落与天气事件倍率 |  |
-| [StatusTextManager](./src/StatusTextManager/README.md) | 100.0% | Plugin para gestionar el texto de estado en PC |  |
-| [SurfaceBlock](./src/SurfaceBlock/README.md) | 0.0% | Prohibir proyectiles en la superficie  | [LazyAPI](./src/LazyAPI/README.md) |
-| [SurvivalCrisis](./src/SurvivalCrisis/README.md) | 0.0% | 'Among Us' como un juego'' |  |
-| [SwitchCommands](./src/SwitchCommands/README.md) | 0.0% | Ejecuta comandos en regiones |  |
-| [TeleportRequest](./src/TeleportRequest/README.md) | 0.0% | Solicitud de teletransporte |  |
-| [TerraNews](./src/TerraNews/README.md) | 0.0% | 每日渔夫任务、月相、沙尘暴与旅商播报 |  |
-| [TimeRate](./src/TimeRate/README.md) | 0.0% | Modifica la aceleración del tiempo usando comandos, y soporta el sueño de los jugadores para activar eventos |  |
-| [TimerKeeper](./src/TimerKeeper/README.md) | 0.0% | Guarda el estado del temporizador |  |
-| [TownNPCHomes](./src/TownNPCHomes/README.md) | 0.0% | Casa rápida de NPC |  |
-| [TransferPatch](./src/TransferPatch/README.md) | 0.0% | 翻译补丁 |  |
-| [UnseenInventory](./src/UnseenInventory/README.md) | 0.0% | Permite que el servidor genere ítems "inobtenibles" |  |
-| [VBY.Common](https://github.com/UnrealMultiple/MyPlugin/blob/master/docs/VBY.Common.md) | 0.0% | Biblioteca base para plugins VBY |  |
-| [VBY.GameContentModify](https://github.com/UnrealMultiple/MyPlugin/blob/master/docs/VBY.GameContentModify.md) | 0.0% | Modificaciones personalizables para cierto contenido del juego (super) |  |
-| [VBY.OtherCommand](https://github.com/UnrealMultiple/MyPlugin/blob/master/docs/VBY.OtherCommand.md) | 0.0% | Proveer algunos otros comandos auxiliares |  |
-| [VBY.PluginLoader](https://github.com/UnrealMultiple/MyPlugin/blob/master/docs/VBY.PluginLoader.md) | 0.0% | Un cargador de plugins que permite la recarga en caliente |  |
-| [VBY.PluginLoaderAutoReload](https://github.com/UnrealMultiple/MyPlugin/blob/master/docs/VBY.PluginLoaderAutoReload.md) | 0.0% | VBY.PluginLoader的扩展, 自动热重载插件 |  |
-| [VeinMiner](./src/VeinMiner/README.md) | 0.0% | Minado en cadena |  |
-| [VotePlus](./src/VotePlus/README.md) | 96.1% | Votación multifuncional |  |
-| [WeaponPlus](./src/WeaponPlus/README.md) | 100.0% | Versión de monedas para mejorar armas |  |
-| [WikiLangPackLoader](./src/WikiLangPackLoader/README.md) | 100.0% | Cargue el paquete de idioma wiki para el servidor. |  |
-| [WorldEdit](./src/WorldEdit/README.md) | 0.0% | Agregue comandos para editar bloques en lote. |  |
-| [WorldModify](https://github.com/UnrealMultiple/TShockWorldModify/blob/master/README.md) | 0.0% | Editor del mundo, permite modificar la mayoría de los parámetros del mundo |  |
+| [AdaptiveBossHP](.\src\AdaptiveBossHP/README.md) | 0.0% | Boss自适应血量：初始按百分比增幅，每失败一次临时减免，每成功一次永久递减 |  |
+| [AdditionalPylons](.\src\AdditionalPylons/README.md) | 80.0% | Colocar más pilones | [LazyAPI](.\src\LazyAPI/README.md) |
+| [AutoEat](.\src\AutoEat/README.md) | 0.0% | 自动进食/自动喝药：低血蓝自动吃食物，增益到期自动续（仅续你用过、刚过期的），可分别开关续食物/药水/增益 |  |
+| [BottleRefund](.\src\BottleRefund/README.md) | 0.0% | 喝药自动返还玻璃瓶：延迟数秒全面结算背包流水后发放，合并堆叠/入箱/丢弃等批量操作不会误发，生长无需任何指令 |  |
+| [DailyMerchant](.\src\DailyMerchant/README.md) | -25.0% | El mercader viajero y el mercader esqueleto aparecen todos los días, cada uno con su propio interruptor |  |
+| [ExplosionGuard](.\src\ExplosionGuard/README.md) | 0.0% | 爆炸守卫：非玩家炮弹/爆炸保留伤害但不破坏方块，白名单/黑名单可控，绑定失败自动降级 |  |
+| [FullHealthRespawn](.\src\FullHealthRespawn/README.md) | -100.0% | Restaurar salud completa al reaparecer |  |
+| [HerbBloom](.\src\HerbBloom/README.md) | 0.0% | 全草药常开：成熟即开花、无视昼夜/天气/月相条件，开花后永不回退；生长速度默认保持原版（可配置加速） |  |
+| [LazyAPI](.\src\LazyAPI/README.md) | -11.1% | Biblioteca base para plugins | [linq2db]() |
+| [MonsterTuner](.\src\MonsterTuner/README.md) | 0.0% | 怪物数值调整：按 BOSS/精英/小怪分组倍率调整血量/伤害/防御/金币，/mt 查看、/mtreload 热重载 |  |
+| [NoNaturalInvasion](.\src\NoNaturalInvasion/README.md) | 0.0% | 阻止自然入侵：只拦凌晨自然刷的哥布林/海盗入侵，手动召唤（旗帜/海盗地图）与 /invade 不受影响 |  |
+| [NurseHeal](.\src\NurseHeal/README.md) | 0.0% | 护士治疗 |  |
+| [Starfall](.\src\Starfall/README.md) | 0.0% | 服务端控制坠落之星生成速率、掉落与天气事件倍率 |  |
+| [TerraNews](.\src\TerraNews/README.md) | -12.5% | 每日渔夫任务、月相、沙尘暴与旅商播报 |  |
 
 </Details>
 
