@@ -28,7 +28,7 @@ namespace AdaptiveBossHP
     public class AdaptiveBossHPPlugin : TerrariaPlugin
     {
         public override string Name => "AdaptiveBossHP";
-        public override string Author => "zlqd123";
+        public override string Author => "不是现在";
         public override string Description =>
             "Boss 自适应血量：初始按百分比增幅，失败临时减免，成功永久递减";
         public override Version Version => new Version(1, 0, 1);

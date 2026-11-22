@@ -1,7 +1,7 @@
 {
   "Name": "AdaptiveBossHP",
   "Version": "1.0.1.0",
-  "Author": "zlqd123",
+  "Author": "不是现在",
   "HotReload": true,
   "README.en-US": {
     "Description": "Adaptive boss HP: percent-based base bonus, temporary relief per failed attempt, permanent decay per victory"
