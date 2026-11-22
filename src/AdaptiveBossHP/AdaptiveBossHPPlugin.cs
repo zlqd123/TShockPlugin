@@ -305,7 +305,7 @@ namespace AdaptiveBossHP
         /// <summary>管理操作（reset/reload）用户组门槛：名单见配置"管理指令允许的用户组"，控制台始终放行。</summary>
         private bool RequireAdmin(CommandArgs args)
         {
-            if (args.Player == TShock.Server)
+            if (args.Player == TSPlayer.Server)
                 return true;
 
             var allowed = _config.AdminGroups ?? new List<string>();
