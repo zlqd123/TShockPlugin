@@ -9,11 +9,21 @@ namespace AdaptiveBossHP
 {
     /// <summary>
     /// 单个 Boss 组的百分比配置。
-    /// 最终血量 = 原版血量 × (1 + BonusPercent%) × (1 - SuccessReducePercent%)^成功次数 × (1 - FailReducePercent%)^连败次数
-    /// 结果不会低于原版血量的 MinPercent%（未设置时使用全局 GlobalMinPercent）。
+    ///
+    /// 成功衰减算法（SuccessDecayMode）：
+    ///   HalfLife（默认）：首战倍率与下限之间的"加成空间"按半衰期收敛——
+    ///     ratio = 下限 + (首战倍率 - 下限) × 0.5^(成功次数 / SuccessHalfLife)
+    ///     每成功 SuccessHalfLife 次，加成空间减半，越减越慢，最终收敛到下限，永不骤降。
+    ///   PercentPerWin（旧算法）：每次成功整体乘 (1 - SuccessReducePercent%)。
+    ///
+    /// 失败减免（两种算法通用）：ratio × (1 - FailReducePercent%)^连败次数，成功后清零恢复。
+    /// 最终结果不低于 下限（MinPercent，未设置则用 GlobalMinPercent）。
     /// </summary>
     public class BossGroupConfig
     {
+        public const string DecayModeHalfLife = "HalfLife";
+        public const string DecayModePercentPerWin = "PercentPerWin";
+
         /// <summary>显示名（用于广播与指令输出）。</summary>
         public string DisplayName { get; set; } = "";
 
@@ -27,24 +37,43 @@ namespace AdaptiveBossHP
         public double BonusPercent { get; set; } = 50;
 
         /// <summary>Y：每次失败（逃逸/团灭）临时减少的血量百分比，成功后自动恢复。</summary>
-        public double FailReducePercent { get; set; } = 10;
+        public double FailReducePercent { get; set; } = 15;
 
-        /// <summary>Z：每次成功永久减少的血量百分比（乘法累积）。</summary>
-        public double SuccessReducePercent { get; set; } = 5;
+        /// <summary>Z：PercentPerWin 模式下每次成功永久减少的血量百分比（乘法累积）。</summary>
+        public double SuccessReducePercent { get; set; } = 10;
+
+        /// <summary>成功衰减算法：HalfLife（默认）或 PercentPerWin。</summary>
+        public string SuccessDecayMode { get; set; } = DecayModeHalfLife;
+
+        /// <summary>HalfLife 模式：每成功这么多次，"超出下限的加成"减半（默认 10）。</summary>
+        public double SuccessHalfLife { get; set; } = 10;
 
         /// <summary>血量下限（原版的百分比）；null 则使用 GlobalMinPercent。</summary>
         public double? MinPercent { get; set; } = null;
 
         public double ComputeRatio(BossGroupState state, double globalMinPercent)
         {
-            double successFactor = Math.Pow(Math.Clamp(1.0 - SuccessReducePercent / 100.0, 0.0, 1.0),
-                Math.Max(0, state.SuccessCount));
+            double floor = Math.Clamp(Math.Max(0.0, MinPercent ?? globalMinPercent) / 100.0, 0.01, 10.0);
+            double peak = Math.Max(1.0 + BonusPercent / 100.0, floor); // 首战倍率（不低于下限）
+
+            double successFactor;
+            if (string.Equals(SuccessDecayMode, DecayModePercentPerWin, StringComparison.OrdinalIgnoreCase))
+            {
+                // 旧算法：每次成功整体乘 (1 - Z%)
+                successFactor = peak * Math.Pow(Math.Clamp(1.0 - SuccessReducePercent / 100.0, 0.0, 1.0),
+                    Math.Max(0, state.SuccessCount));
+            }
+            else
+            {
+                // 半衰期算法：加成空间（首战倍率 - 下限）按 0.5^(S/半衰期) 收敛
+                double halfLife = SuccessHalfLife > 0 ? SuccessHalfLife : 10;
+                successFactor = floor + (peak - floor) * Math.Pow(0.5, Math.Max(0, state.SuccessCount) / halfLife);
+            }
+
             double failFactor = Math.Pow(Math.Clamp(1.0 - FailReducePercent / 100.0, 0.0, 1.0),
                 Math.Max(0, state.FailStreak));
-            double ratio = (1.0 + BonusPercent / 100.0) * successFactor * failFactor;
 
-            double floor = Math.Max(0.0, MinPercent ?? globalMinPercent) / 100.0;
-            return Math.Max(ratio, floor);
+            return Math.Max(successFactor * failFactor, floor);
         }
     }
 
@@ -57,7 +86,7 @@ namespace AdaptiveBossHP
         public bool BroadcastMessages { get; set; } = true;
 
         /// <summary>全局血量下限：最终血量不低于原版的这个百分比。</summary>
-        public double GlobalMinPercent { get; set; } = 30;
+        public double GlobalMinPercent { get; set; } = 50;
 
         /// <summary>Boss 组配置，键为组名（指令 reset 用）。</summary>
         public Dictionary<string, BossGroupConfig> Groups { get; set; } = BuildDefaultGroups();
@@ -67,7 +96,7 @@ namespace AdaptiveBossHP
             // Boss 组默认值：NPCIDs 为该组全部成员（会被缩放），KillTargets 为判定击败的关键部位
             var g = new Dictionary<string, BossGroupConfig>();
             void Add(string key, string name, short[] ids, short[] killTargets,
-                double bonus = 50, double fail = 10, double success = 5)
+                double bonus = 50, double fail = 15, double success = 10)
             {
                 g[key] = new BossGroupConfig
                 {

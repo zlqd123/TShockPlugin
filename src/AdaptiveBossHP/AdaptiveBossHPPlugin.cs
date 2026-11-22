@@ -31,7 +31,7 @@ namespace AdaptiveBossHP
         public override string Author => "zlqd123";
         public override string Description =>
             "Boss 自适应血量：初始按百分比增幅，失败临时减免，成功永久递减";
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(1, 1, 0);
 
         public static readonly string ConfigPath = Path.Combine("tshock", "AdaptiveBossHP.json");
         public static readonly string StatePath = Path.Combine("tshock", "AdaptiveBossHP_State.json");
@@ -235,12 +235,13 @@ namespace AdaptiveBossHP
                 state.SuccessCount++;
                 state.FailStreak = 0; // 临时减免恢复
                 _state.Save(StatePath);
+                double nextRatio = group.ComputeRatio(state, _config.GlobalMinPercent);
                 TShock.Log.ConsoleInfo(
-                    $"[AdaptiveBossHP] {group.DisplayName} 被击败：成功次数={state.SuccessCount}，永久 -{group.SuccessReducePercent:0.##}%，连败已清零");
+                    $"[AdaptiveBossHP] {group.DisplayName} 被击败：成功次数={state.SuccessCount}，下次血量 {nextRatio * 100:0.#}%，连败已清零");
 
                 if (_config.BroadcastMessages)
                     TShock.Utils.Broadcast(
-                        $"[自适应Boss] {group.DisplayName} 被击败！下次召唤起永久血量 -{group.SuccessReducePercent:0.##}%" +
+                        $"[自适应Boss] {group.DisplayName} 被击败！下次召唤血量为原版的 {nextRatio * 100:0.#}%" +
                         $"（累计成功 {state.SuccessCount} 次），失败减免已恢复",
                         Color.LimeGreen);
             }
@@ -249,12 +250,13 @@ namespace AdaptiveBossHP
                 state.FailStreak++;
                 state.TotalFails++;
                 _state.Save(StatePath);
+                double nextRatio = group.ComputeRatio(state, _config.GlobalMinPercent);
                 TShock.Log.ConsoleInfo(
-                    $"[AdaptiveBossHP] {group.DisplayName} 未被击败：连败={state.FailStreak}，下次 -{group.FailReducePercent:0.##}%");
+                    $"[AdaptiveBossHP] {group.DisplayName} 未被击败：连败={state.FailStreak}，下次血量 {nextRatio * 100:0.#}%");
 
                 if (_config.BroadcastMessages)
                     TShock.Utils.Broadcast(
-                        $"[自适应Boss] {group.DisplayName} 未能被击败（逃逸/团灭），下次召唤血量 -{group.FailReducePercent:0.##}%" +
+                        $"[自适应Boss] {group.DisplayName} 未能被击败（逃逸/团灭），下次召唤血量为原版的 {nextRatio * 100:0.#}%" +
                         $"（当前连败 {state.FailStreak} 次）",
                         Color.Orange);
             }
