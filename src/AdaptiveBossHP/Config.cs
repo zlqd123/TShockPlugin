@@ -11,16 +11,18 @@ namespace AdaptiveBossHP
     /// 单个 Boss 组的百分比配置。
     ///
     /// 成功衰减算法（SuccessDecayMode）：
-    ///   HalfLife（默认）：首战倍率与下限之间的"加成空间"按半衰期收敛——
+    ///   LinearPerWin（默认）：每成功一次，血量比例固定减少 SuccessReducePerWin 个百分点，
+    ///     线性下降直到下限——每一场都有明确可见的变化，总衰减周期 = 加成空间 / 步长。
+    ///   HalfLife：首战倍率与下限之间的"加成空间"按半衰期收敛——
     ///     ratio = 下限 + (首战倍率 - 下限) × 0.5^(成功次数 / SuccessHalfLife)
-    ///     每成功 SuccessHalfLife 次，加成空间减半，越减越慢，最终收敛到下限，永不骤降。
-    ///   PercentPerWin（旧算法）：每次成功整体乘 (1 - SuccessReducePercent%)。
+    ///   PercentPerWin：每次成功整体乘 (1 - SuccessReducePercent%)（v1.0 旧算法）。
     ///
-    /// 失败减免（两种算法通用）：ratio × (1 - FailReducePercent%)^连败次数，成功后清零恢复。
+    /// 失败减免（各算法通用）：ratio × (1 - FailReducePercent%)^连败次数，成功后清零恢复。
     /// 最终结果不低于 下限（MinPercent，未设置则用 GlobalMinPercent）。
     /// </summary>
     public class BossGroupConfig
     {
+        public const string DecayModeLinearPerWin = "LinearPerWin";
         public const string DecayModeHalfLife = "HalfLife";
         public const string DecayModePercentPerWin = "PercentPerWin";
 
@@ -39,11 +41,14 @@ namespace AdaptiveBossHP
         /// <summary>Y：每次失败（逃逸/团灭）临时减少的血量百分比，成功后自动恢复。</summary>
         public double FailReducePercent { get; set; } = 15;
 
+        /// <summary>LinearPerWin 模式：每成功一次固定减少的血量百分点（默认 2，即 150%→148%）。</summary>
+        public double SuccessReducePerWin { get; set; } = 2;
+
         /// <summary>Z：PercentPerWin 模式下每次成功永久减少的血量百分比（乘法累积）。</summary>
         public double SuccessReducePercent { get; set; } = 10;
 
-        /// <summary>成功衰减算法：HalfLife（默认）或 PercentPerWin。</summary>
-        public string SuccessDecayMode { get; set; } = DecayModeHalfLife;
+        /// <summary>成功衰减算法：LinearPerWin（默认）/ HalfLife / PercentPerWin。</summary>
+        public string SuccessDecayMode { get; set; } = DecayModeLinearPerWin;
 
         /// <summary>HalfLife 模式：每成功这么多次，"超出下限的加成"减半（默认 10）。</summary>
         public double SuccessHalfLife { get; set; } = 10;
@@ -59,15 +64,21 @@ namespace AdaptiveBossHP
             double successFactor;
             if (string.Equals(SuccessDecayMode, DecayModePercentPerWin, StringComparison.OrdinalIgnoreCase))
             {
-                // 旧算法：每次成功整体乘 (1 - Z%)
+                // 乘法衰减：每次成功整体乘 (1 - Z%)
                 successFactor = peak * Math.Pow(Math.Clamp(1.0 - SuccessReducePercent / 100.0, 0.0, 1.0),
                     Math.Max(0, state.SuccessCount));
             }
-            else
+            else if (string.Equals(SuccessDecayMode, DecayModeHalfLife, StringComparison.OrdinalIgnoreCase))
             {
-                // 半衰期算法：加成空间（首战倍率 - 下限）按 0.5^(S/半衰期) 收敛
+                // 半衰期：加成空间（首战倍率 - 下限）按 0.5^(S/半衰期) 收敛
                 double halfLife = SuccessHalfLife > 0 ? SuccessHalfLife : 10;
                 successFactor = floor + (peak - floor) * Math.Pow(0.5, Math.Max(0, state.SuccessCount) / halfLife);
+            }
+            else
+            {
+                // 线性递减（默认）：每成功一次固定减 SuccessReducePerWin 个百分点，直到下限
+                double step = Math.Max(0.0, SuccessReducePerWin) / 100.0;
+                successFactor = Math.Max(floor, peak - Math.Max(0, state.SuccessCount) * step);
             }
 
             double failFactor = Math.Pow(Math.Clamp(1.0 - FailReducePercent / 100.0, 0.0, 1.0),
