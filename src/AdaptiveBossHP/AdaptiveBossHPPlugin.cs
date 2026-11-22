@@ -254,7 +254,7 @@ namespace AdaptiveBossHP
                 TShock.Log.ConsoleInfo(
                     $"[AdaptiveBossHP] {group.DisplayName} 未被击败：连败={state.FailStreak}，下次血量 {nextRatio * 100:0.#}%");
 
-                if (_config.BroadcastMessages)
+                if (_config.BroadcastMessages && group.FailReducePercent > 0)
                     TShock.Utils.Broadcast(
                         $"[自适应Boss] {group.DisplayName} 未能被击败（逃逸/团灭），下次召唤血量为原版的 {nextRatio * 100:0.#}%" +
                         $"（当前连败 {state.FailStreak} 次）",

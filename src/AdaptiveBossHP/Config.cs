@@ -163,18 +163,18 @@ namespace AdaptiveBossHP
             Add("Golem", "石巨人", new[] { NPCID.Golem, NPCID.GolemHead, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHeadFree }, new[] { NPCID.Golem });
             Add("DukeFishron", "猪龙鱼公爵", new[] { NPCID.DukeFishron }, new[] { NPCID.DukeFishron });
             Add("EmpressOfLight", "光之女皇", new[] { NPCID.HallowBoss }, new[] { NPCID.HallowBoss });
-            Add("Betsy", "双足翼龙", new[] { NPCID.DD2Betsy }, new[] { NPCID.DD2Betsy });
-            Add("FlyingDutchman", "飞翔海盗船", new[] { NPCID.PirateShip }, new[] { NPCID.PirateShip });
-            Add("MartianSaucer", "火星飞碟", new[] { NPCID.MartianSaucer, NPCID.MartianSaucerTurret, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore }, new[] { NPCID.MartianSaucerCore });
             Add("LunaticCultist", "拜月教邪教徒", new[] { NPCID.CultistBoss }, new[] { NPCID.CultistBoss });
             Add("MoonLord", "月亮领主", new[] { NPCID.MoonLordHead, NPCID.MoonLordHand, NPCID.MoonLordCore, NPCID.MoonLordFreeEye }, new[] { NPCID.MoonLordCore });
 
-            // 万圣夜 / 霜月事件 Boss
-            Add("MourningWood", "哀木", new[] { NPCID.MourningWood }, new[] { NPCID.MourningWood });
-            Add("Pumpking", "南瓜王", new[] { NPCID.Pumpking, NPCID.PumpkingBlade }, new[] { NPCID.Pumpking });
-            Add("Everscream", "常绿尖叫怪", new[] { NPCID.Everscream }, new[] { NPCID.Everscream });
-            Add("SantaNK1", "圣诞坦克", new[] { NPCID.SantaNK1 }, new[] { NPCID.SantaNK1 });
-            Add("IceQueen", "冰雪女王", new[] { NPCID.IceQueen }, new[] { NPCID.IceQueen });
+            // 事件 / 小 Boss：无初始增幅、无失败惩罚，仅保留成功永久衰减
+            Add("Betsy", "双足翼龙", new[] { NPCID.DD2Betsy }, new[] { NPCID.DD2Betsy }, bonus: 0, fail: 0);
+            Add("FlyingDutchman", "飞翔海盗船", new[] { NPCID.PirateShip }, new[] { NPCID.PirateShip }, bonus: 0, fail: 0);
+            Add("MartianSaucer", "火星飞碟", new[] { NPCID.MartianSaucer, NPCID.MartianSaucerTurret, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore }, new[] { NPCID.MartianSaucerCore }, bonus: 0, fail: 0);
+            Add("MourningWood", "哀木", new[] { NPCID.MourningWood }, new[] { NPCID.MourningWood }, bonus: 0, fail: 0);
+            Add("Pumpking", "南瓜王", new[] { NPCID.Pumpking, NPCID.PumpkingBlade }, new[] { NPCID.Pumpking }, bonus: 0, fail: 0);
+            Add("Everscream", "常绿尖叫怪", new[] { NPCID.Everscream }, new[] { NPCID.Everscream }, bonus: 0, fail: 0);
+            Add("SantaNK1", "圣诞坦克", new[] { NPCID.SantaNK1 }, new[] { NPCID.SantaNK1 }, bonus: 0, fail: 0);
+            Add("IceQueen", "冰雪女王", new[] { NPCID.IceQueen }, new[] { NPCID.IceQueen }, bonus: 0, fail: 0);
 
             return g;
         }
